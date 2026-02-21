@@ -8,7 +8,7 @@ export const load: PageLoad = async () => {
 	const aboutModule = Object.values(modules).find((m: any) => m.metadata) as any;
 
 	// Get image glob for the about page
-	const imageModules = import.meta.glob('/src/lib/content/about-page/**/*.{jpg,jpeg,png}', {
+	const imageModules = import.meta.glob('/src/lib/content/about-page/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
 		import: 'default'
 	});

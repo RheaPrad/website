@@ -27,7 +27,7 @@ export const load: PageLoad = async ({ params }) => {
 	}
 
 	// Get image glob for this book's gallery
-	const imageModules = import.meta.glob('/src/lib/content/art-page/books/**/*.{jpg,jpeg,png}', {
+	const imageModules = import.meta.glob('/src/lib/content/art-page/books/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
 		import: 'default'
 	});

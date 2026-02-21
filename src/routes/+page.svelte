@@ -77,24 +77,6 @@
 			</div>
 		</a>
 
-		<!-- Sketchbook -->
-		<a href="/sketchbook" class="group block sm:col-span-2 lg:col-span-1">
-			<div class="overflow-hidden mb-4">
-				<img
-					src={checkers}
-					alt="Sketchbook"
-					class="w-full aspect-3/4 object-cover group-hover:scale-[1.02] transition-transform duration-300"
-				/>
-			</div>
-			<div class="flex items-center justify-between">
-				<span
-					class="font-display font-medium
-					       text-[16px] md:text-[20px] tracking-[2.6px] uppercase"
-				>
-					Sketchbook
-				</span>
-				<span class="text-[18px] group-hover:translate-x-1 transition-transform duration-200">→</span>
-			</div>
-		</a>
+
 	</div>
 </section>

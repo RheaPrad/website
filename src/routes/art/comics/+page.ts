@@ -18,7 +18,7 @@ export const load: PageLoad = async () => {
 		.filter((c) => c.slug && !c.slug.startsWith('.'));
 
 	// Get image glob for resolving paths
-	const imageModules = import.meta.glob('/src/lib/content/art-page/comics/**/*.{jpg,jpeg,png}', {
+	const imageModules = import.meta.glob('/src/lib/content/art-page/comics/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
 		import: 'default'
 	});
