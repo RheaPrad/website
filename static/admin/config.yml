@@ -6,6 +6,8 @@ backend:
 
 media_folder: src/lib/content
 public_folder: /src/lib/content
+site_url: https://rheaprad.netlify.app
+logout_redirect_url: https://rheaprad.netlify.app
 
 collections:
   - name: books

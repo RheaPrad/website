@@ -55,63 +55,81 @@
 </section>
 
 <!-- ── Status line ──────────────────────────────────────────────── -->
-<div class="pt-16">
-	<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-4">
-		<!-- Label -->
-		<span class="self-center pb-0.5 font-sans text-[11px] tracking-[1px] text-gray-500 uppercase">
-			added
-		</span>
 
-		<!-- Book thumbnails -->
-		{#each books as book (book.slug)}
-			{#if book.cover}
-				<a
-					href="/art/books/{book.slug}"
-					class="flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
+{#snippet thumbItems()}
+	{#each books as book (book.slug)}
+		{#if book.cover}
+			<a
+				href="/art/books/{book.slug}"
+				class="flex shrink-0 flex-col items-center gap-1 transition-opacity hover:opacity-70"
+			>
+				<img src={resolve(book.cover)} alt={book.title} class="h-[52px] w-[39px] object-cover" />
+				<span
+					class="line-clamp-2 w-[52px] overflow-hidden text-center font-sans text-[10px] leading-tight text-gray-500"
 				>
-					<img src={resolve(book.cover)} alt={book.title} class="h-[52px] w-[39px] object-cover" />
-					<span class="max-w-[56px] text-center font-sans text-[10px] leading-tight text-gray-500">
-						{book.title}
-					</span>
-					{#if book.year}
-						<span class="font-sans text-[9px] leading-none text-gray-500">{book.year}</span>
-					{/if}
-				</a>
-			{/if}
-		{/each}
-
-		<!-- Divider -->
-		{#if comics.length > 0}
-			<span class="self-center pb-4 font-sans text-[13px] text-gray-200">/</span>
+					{book.title}
+				</span>
+				{#if book.year}
+					<span class="font-sans text-[9px] leading-none text-gray-400">{book.year}</span>
+				{/if}
+			</a>
 		{/if}
+	{/each}
 
-		<!-- Comic thumbnails -->
-		{#each comics as comic (comic.slug)}
-			{#if comic.image}
-				<a
-					href="/art/comics"
-					class="flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
+	{#if comics.length > 0}
+		<span class="shrink-0 self-end pb-5 font-sans text-[13px] text-gray-200">/</span>
+	{/if}
+
+	{#each comics as comic (comic.slug)}
+		{#if comic.image}
+			<a
+				href="/art/comics"
+				class="flex shrink-0 flex-col items-center gap-1 transition-opacity hover:opacity-70"
+			>
+				<img src={resolve(comic.image)} alt={comic.title} class="h-[52px] w-[65px] object-cover" />
+				<span
+					class="line-clamp-2 w-[65px] overflow-hidden text-center font-sans text-[10px] leading-tight text-gray-500"
 				>
-					<img
-						src={resolve(comic.image)}
-						alt={comic.title}
-						class="h-[52px] w-[65px] object-cover"
-					/>
-					<span class="max-w-[70px] text-center font-sans text-[10px] leading-tight text-gray-500">
-						{comic.title}
-					</span>
-					{#if comic.year}
-						<span class="font-sans text-[9px] leading-none text-gray-500">{comic.year}</span>
-					{/if}
-				</a>
-			{/if}
-		{/each}
+					{comic.title}
+				</span>
+				{#if comic.year}
+					<span class="font-sans text-[9px] leading-none text-gray-400">{comic.year}</span>
+				{/if}
+			</a>
+		{/if}
+	{/each}
+{/snippet}
 
-		<!-- Build date -->
-		<span class="ml-1 self-center pb-0.5 font-sans text-[11px] text-gray-500">
-			— {buildDateFormatted}
-		</span>
+<!-- Mobile: label pinned left | items scroll | date pinned right -->
+<div class="flex flex-col items-end gap-3 px-6 py-10 md:hidden">
+	<span
+		class="shrink-0 self-center pb-0.5 font-sans text-[11px] tracking-[1px] text-gray-400 uppercase"
+	>
+		added
+	</span>
+	<div class="min-w-0 flex-1 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+		<div class="flex items-end gap-3 pb-0.5">
+			{@render thumbItems()}
+		</div>
 	</div>
+	<span class="shrink-0 self-center pb-0.5 font-sans text-[11px] text-gray-400">
+		— {buildDateFormatted}
+	</span>
+</div>
+
+<!-- Desktop: centred wrapping row (unchanged from before) -->
+<div
+	class="hidden items-end justify-center gap-x-3 gap-y-4 py-10 md:flex md:flex-wrap md:px-10 lg:px-[169px]"
+>
+	<span
+		class="shrink-0 self-end pb-0.5 font-sans text-[11px] tracking-[1px] text-gray-400 uppercase"
+	>
+		added
+	</span>
+	{@render thumbItems()}
+	<span class="ml-1 shrink-0 self-end pb-0.5 font-sans text-[11px] text-gray-400">
+		— {buildDateFormatted}
+	</span>
 </div>
 
 <!-- Featured Work -->
