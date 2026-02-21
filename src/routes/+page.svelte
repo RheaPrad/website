@@ -1,7 +1,7 @@
 <script lang="ts">
 	import portrait from '$lib/content/home-page/checkers.webp';
 	import type { PageData } from './$types';
-
+	import { ArrowRight } from '@lucide/svelte';
 	const { data } = $props<{ data: PageData }>();
 	const { homeMeta, recentPosts, buildDate, books, comics, images } = $derived(data);
 
@@ -151,7 +151,7 @@
 					Books
 				</span>
 				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					>→</span
+					><ArrowRight /></span
 				>
 			</div>
 		</a>
@@ -172,7 +172,7 @@
 					Comics
 				</span>
 				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					>→</span
+					><ArrowRight /></span
 				>
 			</div>
 		</a>
@@ -203,7 +203,7 @@
 					Blog
 				</span>
 				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					>→</span
+					><ArrowRight /></span
 				>
 			</div>
 		</a>
