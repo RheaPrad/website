@@ -1,16 +1,18 @@
 ---
 title: Who is Ready for Sadhya?
 year: 2024
-format: "Format TBD"
+format: "Children's Picturebook | 11.25 x 9.25cm"
 cover_image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/12_13.png
 gallery:
+  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/6_7.png
+  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/8_9.png
   - /src/lib/content/art-page/books/who-is-ready-for-sadhya/12_13.png
   - /src/lib/content/art-page/books/who-is-ready-for-sadhya/14_15.png
+  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/16_17.png
+  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/30_31.png
 other_projects:
-  - canidae
+  - house-of-memories
   - cell-block-tango
 ---
 
-# Who is Ready for Sadhya?
-
-This is a placeholder for the book description. Replace this with the actual content from your Figma design.
+A children's picturebook celebrating Onam and the traditional feast called Sadhya. A joyful story about family, food, and the rituals that bring us home.
