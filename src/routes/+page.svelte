@@ -18,14 +18,14 @@
 	>
 		<div class="text-white">
 			<h1
-				class="font-['Josefin_Sans_Variable',sans-serif] font-medium
+				class="font-display font-medium
 				       text-[36px] md:text-[52px] lg:text-[72px]
 				       tracking-[3px] lg:tracking-[4px] leading-none uppercase"
 			>
 				Rhea Pradeep
 			</h1>
 			<p
-				class="font-['Inter_Variable',sans-serif] font-normal
+				class="font-sans font-normal
 				       text-[16px] md:text-[20px] lg:text-[24px] mt-3 lg:mt-4 tracking-[0.5px]"
 			>
 				visual storyteller &amp; illustrator
@@ -48,7 +48,7 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<span
-					class="font-['Josefin_Sans_Variable',sans-serif] font-medium
+					class="font-display font-medium
 					       text-[16px] md:text-[20px] tracking-[2.6px] uppercase"
 				>
 					Books
@@ -68,7 +68,7 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<span
-					class="font-['Josefin_Sans_Variable',sans-serif] font-medium
+					class="font-display font-medium
 					       text-[16px] md:text-[20px] tracking-[2.6px] uppercase"
 				>
 					Comics
@@ -88,7 +88,7 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<span
-					class="font-['Josefin_Sans_Variable',sans-serif] font-medium
+					class="font-display font-medium
 					       text-[16px] md:text-[20px] tracking-[2.6px] uppercase"
 				>
 					Sketchbook

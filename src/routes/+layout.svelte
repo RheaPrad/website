@@ -35,7 +35,7 @@
 	<!-- Desktop nav -->
 	<nav
 		class="hidden lg:flex justify-between w-[1076px] mx-auto text-white
-		       font-['Josefin_Sans_Variable',sans-serif] font-medium text-[20px] tracking-[2.6px]"
+		       font-display font-medium text-[20px] tracking-[2.6px]"
 	>
 		{#each navLinks as link}
 			<a href={link.href} class="hover:opacity-70 transition-opacity">{link.label}</a>
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 						<span
-							class="font-['Josefin_Sans_Variable',sans-serif] font-medium text-[16px] tracking-[2.6px]"
+							class="font-display font-medium text-[16px] tracking-[2.6px]"
 						>
 							Menu
 						</span>
@@ -87,7 +87,7 @@
 							onclick={() => {
 								mobileOpen = false;
 							}}
-							class="text-white font-['Josefin_Sans_Variable',sans-serif]
+							class="text-white font-display
 							       font-medium text-[28px] tracking-[2.6px] hover:opacity-70 transition-opacity"
 						>
 							{link.label}

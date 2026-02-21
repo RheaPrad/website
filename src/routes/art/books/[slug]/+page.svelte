@@ -24,14 +24,14 @@
 	       lg:pl-[169px] lg:pr-[169px] lg:pt-[72px] lg:pb-[56px]"
 >
 	<h1
-		class="font-['Inter_Variable',sans-serif] font-normal
+		class="font-sans font-normal
 		       text-[26px] md:text-[36px] lg:text-[48px] mb-3 lg:mb-4"
 	>
 		{book.title}{book.year ? `, ${book.year}` : ''}
 	</h1>
 	{#if book.format}
 		<p
-			class="font-['Inter_Variable',sans-serif] font-normal
+			class="font-sans font-normal
 			       text-[15px] md:text-[18px] lg:text-[20px] text-gray-600 mb-6 lg:mb-8"
 		>
 			{book.format}
@@ -40,7 +40,7 @@
 
 	{#if component}
 		<div
-			class="font-['Inter_Variable',sans-serif] font-normal
+			class="font-sans font-normal
 			       text-[15px] md:text-[18px] lg:text-[20px] leading-[1.7] max-w-[720px]"
 		>
 			<svelte:component this={component} />
@@ -67,13 +67,13 @@
 {#if book.other_projects && book.other_projects.length > 0}
 	<section class="py-10 lg:py-[56px] flex flex-col items-center gap-4 px-6">
 		<h2
-			class="font-['Josefin_Sans_Variable',sans-serif]
+			class="font-display
 			       text-[22px] lg:text-[32px] tracking-[0.32px] uppercase mb-2 lg:mb-4"
 		>
 			Other Projects
 		</h2>
 		<p
-			class="font-['Josefin_Sans_Variable',sans-serif]
+			class="font-display
 			       text-[14px] lg:text-[20px] tracking-[2px] lg:tracking-[2.6px]
 			       text-center flex flex-wrap justify-center gap-2 lg:gap-0"
 		>

@@ -11,7 +11,7 @@
 	       lg:pl-[131px] lg:pr-[131px] lg:pt-[72px] lg:pb-[80px]"
 >
 	<h1
-		class="font-['Inter_Variable',sans-serif] font-normal
+		class="font-sans font-normal
 		       text-[32px] md:text-[40px] lg:text-[48px] mb-8 lg:mb-[56px]"
 	>
 		COMICS
@@ -36,6 +36,6 @@
 	</div>
 
 	{#if comics.length === 0}
-		<p class="font-['Inter_Variable',sans-serif] text-gray-600">No comics found.</p>
+		<p class="font-sans text-gray-600">No comics found.</p>
 	{/if}
 </section>

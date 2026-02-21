@@ -7,7 +7,7 @@
 
 <section class="px-6 pt-10 pb-12 md:px-10 md:pt-12 lg:px-[169px] lg:pt-[72px] lg:pb-[80px]">
 	<h1
-		class="font-['Inter_Variable',sans-serif] font-normal
+		class="font-sans font-normal
 		       text-[32px] md:text-[40px] lg:text-[48px] mb-8 lg:mb-[56px]"
 	>
 		BOOKS
@@ -30,13 +30,13 @@
 					{/if}
 				</div>
 				<p
-					class="font-['Inter_Variable',sans-serif] font-normal
+					class="font-sans font-normal
 					       text-[14px] md:text-[18px] lg:text-[20px] group-hover:underline"
 				>
 					{book.metadata.title}
 				</p>
 				{#if book.metadata.year}
-					<p class="font-['Inter_Variable',sans-serif] text-[13px] md:text-[15px] text-gray-500 mt-1">
+					<p class="font-sans text-[13px] md:text-[15px] text-gray-500 mt-1">
 						{book.metadata.year}
 					</p>
 				{/if}
@@ -45,6 +45,6 @@
 	</div>
 
 	{#if books.length === 0}
-		<p class="font-['Inter_Variable',sans-serif] text-gray-600">No books found.</p>
+		<p class="font-sans text-gray-600">No books found.</p>
 	{/if}
 </section>

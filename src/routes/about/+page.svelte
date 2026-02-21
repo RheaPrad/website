@@ -20,7 +20,7 @@
 		<!-- Left: heading + bio -->
 		<div class="flex-1 min-w-0 order-2 lg:order-1">
 			<h1
-				class="font-['Inter_Variable',sans-serif] font-normal
+				class="font-sans font-normal
 				       text-[32px] md:text-[40px] lg:text-[48px] mb-8 lg:mb-[40px]"
 			>
 				CONTACT
@@ -28,7 +28,7 @@
 
 			{#if component}
 				<div
-					class="font-['Inter_Variable',sans-serif] font-normal
+					class="font-sans font-normal
 					       text-[15px] md:text-[18px] lg:text-[20px] leading-[1.7]"
 				>
 					<svelte:component this={component} />
