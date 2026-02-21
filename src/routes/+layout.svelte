@@ -24,56 +24,52 @@
 </svelte:head>
 
 <!-- ─── Header ─────────────────────────────────────────────── -->
-<header class="bg-[#363b51] h-[109px] flex items-center px-6 lg:px-[26px]">
+<header class="flex h-[109px] items-center bg-[#363b51] px-6 lg:px-[26px]">
 	<!-- Logo -->
 	<a href="/" class="flex-shrink-0">
-		<img class="w-[58px] h-[58px] rounded-full object-cover" src={portrait} alt="Rhea Pradeep" />
+		<img class="h-[58px] w-[58px] rounded-full object-cover" src={portrait} alt="Rhea Pradeep" />
 	</a>
 
 	<!-- Desktop nav -->
 	<nav
-		class="hidden lg:flex justify-between w-[1076px] mx-auto text-white
-		       font-display font-medium text-[20px] tracking-[2.6px]"
+		class="mx-auto hidden w-[1076px] justify-between font-display text-[20px]
+		       font-medium tracking-[2.6px] text-white lg:flex"
 	>
 		{#each navLinks as link}
-			<a href={link.href} class="hover:opacity-70 transition-opacity">{link.label}</a>
+			<a href={link.href} class="transition-opacity hover:opacity-70">{link.label}</a>
 		{/each}
 	</nav>
 
 	<!-- Mobile hamburger -->
-	<div class="flex lg:hidden ml-auto">
+	<div class="ml-auto flex lg:hidden">
 		<Popover.Root bind:open={mobileOpen}>
 			<Popover.Trigger>
 				{#snippet child({ props })}
 					<button
 						{...props}
-						class="flex items-center gap-2.5 text-white touch-manipulation"
+						class="flex touch-manipulation items-center gap-2.5 text-white"
 						aria-label="Toggle menu"
 					>
 						<div class="relative flex h-8 w-5 items-center justify-center">
 							<div class="relative size-5">
 								<span
-									class="bg-white absolute start-0 block h-0.5 w-5 transition-all duration-100
+									class="absolute start-0 block h-0.5 w-5 bg-white transition-all duration-100
 									       {mobileOpen ? 'top-[0.5rem] -rotate-45' : 'top-1'}"
 								></span>
 								<span
-									class="bg-white absolute start-0 block h-0.5 w-5 transition-all duration-100
+									class="absolute start-0 block h-0.5 w-5 bg-white transition-all duration-100
 									       {mobileOpen ? 'top-[0.5rem] rotate-45' : 'top-3'}"
 								></span>
 							</div>
 						</div>
-						<span
-							class="font-display font-medium text-[16px] tracking-[2.6px]"
-						>
-							Menu
-						</span>
+						<span class="font-display text-[16px] font-medium tracking-[2.6px]"> Menu </span>
 					</button>
 				{/snippet}
 			</Popover.Trigger>
 			<Popover.Content
-				class="bg-[#363b51]/95 backdrop-blur-sm
-				       w-(--bits-popover-content-available-width)
-				       rounded-none border-none shadow-none p-0"
+				class="mt-8 w-(--bits-popover-content-available-width) rounded-none
+				       border-none
+				       bg-[#363b51]/95 p-0 shadow-none backdrop-blur-sm"
 				align="end"
 				side="bottom"
 				sideOffset={0}
@@ -85,8 +81,8 @@
 							onclick={() => {
 								mobileOpen = false;
 							}}
-							class="text-white font-display
-							       font-medium text-[28px] tracking-[2.6px] hover:opacity-70 transition-opacity"
+							class="font-display text-[28px]
+							       font-medium tracking-[2.6px] text-white transition-opacity hover:opacity-70"
 						>
 							{link.label}
 						</a>
@@ -102,16 +98,16 @@
 
 <!-- ─── Footer ────────────────────────────────────────────── -->
 <footer
-	class="bg-[#363b51] h-[109px] flex items-center justify-center lg:justify-end
-	       px-6 lg:px-[26px] gap-6 lg:gap-[51px]"
+	class="flex h-[109px] items-center justify-center gap-6 bg-[#363b51]
+	       px-6 lg:justify-end lg:gap-[51px] lg:px-[26px]"
 >
 	<a
 		href="https://linkedin.com/in/rhea-pradeep"
 		aria-label="LinkedIn"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="w-[39px] h-[39px] rounded-full border border-white/40 flex items-center justify-center
-		       text-white hover:border-white transition-colors"
+		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
+		       text-white transition-colors hover:border-white"
 	>
 		<Linkedin size={18} />
 	</a>
@@ -120,16 +116,16 @@
 		aria-label="Instagram"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="w-[39px] h-[39px] rounded-full border border-white/40 flex items-center justify-center
-		       text-white hover:border-white transition-colors"
+		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
+		       text-white transition-colors hover:border-white"
 	>
 		<Instagram size={18} />
 	</a>
 	<a
 		href="mailto:hello@rheapradeep.com"
 		aria-label="Email"
-		class="w-[39px] h-[39px] rounded-full border border-white/40 flex items-center justify-center
-		       text-white hover:border-white transition-colors"
+		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
+		       text-white transition-colors hover:border-white"
 	>
 		<Mail size={18} />
 	</a>
@@ -138,8 +134,8 @@
 		aria-label="Bluesky"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="w-[39px] h-[39px] rounded-full border border-white/40 flex items-center justify-center
-		       text-white hover:border-white transition-colors"
+		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
+		       text-white transition-colors hover:border-white"
 	>
 		<svg width="18" height="18" viewBox="0 0 600 530" fill="currentColor" aria-hidden="true">
 			<path d={blueskyPath} />
