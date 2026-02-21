@@ -16,7 +16,7 @@ export const load: PageLoad = async () => {
 				new Date(b.metadata.date ?? 0).getTime() - new Date(a.metadata.date ?? 0).getTime()
 		);
 
-	const images = import.meta.glob('/src/lib/content/blog-page/**/*.{jpg,jpeg,png,webp}', {
+	const images = import.meta.glob('/src/lib/content/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
 		import: 'default',
 		eager: true

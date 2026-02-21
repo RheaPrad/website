@@ -22,7 +22,7 @@ export const load: PageLoad = async ({ params }) => {
 
 	const mod = match[1] as any;
 
-	const images = import.meta.glob('/src/lib/content/blog-page/**/*.{jpg,jpeg,png,webp}', {
+	const images = import.meta.glob('/src/lib/content/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
 		import: 'default',
 		eager: true

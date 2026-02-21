@@ -1,11 +1,12 @@
 <script lang="ts">
-	import bookCover from '$lib/content/art-page/books/canidae/canidae_pages-to-jpg-0001.webp';
-	import comicImage from '$lib/content/art-page/comics/rhea-pradeep_crosscutting.webp';
 	import portrait from '$lib/content/home-page/checkers.webp';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
-	const { recentPosts, buildDate, books, comics, images } = $derived(data);
+	const { homeMeta, recentPosts, buildDate, books, comics, images } = $derived(data);
+
+	const featuredBook = $derived(resolve(homeMeta.featured_book ?? ''));
+	const featuredComic = $derived(resolve(homeMeta.featured_comic ?? ''));
 
 	const buildDateFormatted = $derived(
 		new Date(buildDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
@@ -120,7 +121,7 @@
 		<a href="/art/books" class="group block">
 			<div class="mb-4 overflow-hidden">
 				<img
-					src={bookCover}
+					src={featuredBook}
 					alt="Books"
 					class="aspect-3/4 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
 				/>
@@ -141,7 +142,7 @@
 		<a href="/art/comics" class="group block">
 			<div class="mb-4 overflow-hidden">
 				<img
-					src={comicImage}
+					src={featuredComic}
 					alt="Comics"
 					class="aspect-3/4 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
 				/>
