@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: RheaPrad/website
+
+media_folder: src/lib/content
+public_folder: /src/lib/content
+
+collections:
+  - name: books
+    label: Books
+    folder: src/lib/content/art-page/books
+    create: true
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Year, name: year, widget: number }
+      - { label: Format, name: format, widget: string, hint: "e.g. Children's Picturebook | 5.75 x 7.75 in" }
+      - { label: Cover Image, name: cover_image, widget: image }
+      - { label: Gallery, name: gallery, widget: list, field: { label: Image, name: image, widget: image } }
+      - { label: Other Projects, name: other_projects, widget: list, field: { label: Slug, name: slug, widget: string }, hint: "Slugs of related books" }
+      - { label: Description, name: body, widget: markdown }
+
+  - name: comics
+    label: Comics
+    folder: src/lib/content/art-page/comics
+    create: true
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image }
+
+  - name: about
+    label: About
+    files:
+      - name: about
+        label: About Page
+        file: src/lib/content/about-page/about.md
+        fields:
+          - { label: Photo, name: photo, widget: image }
+          - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+          - { label: Email, name: email, widget: string, required: false }
+          - { label: Instagram URL, name: instagram, widget: string, required: false }
+          - { label: BlueSky URL, name: bluesky, widget: string, required: false }
+          - { label: Bio, name: body, widget: markdown }
