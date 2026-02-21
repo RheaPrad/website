@@ -16,7 +16,7 @@ collections:
     format: frontmatter
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Year, name: year, widget: number }
+      - { label: Date, name: date, widget: datetime }
       - { label: Format, name: format, widget: string, hint: "e.g. Children's Picturebook | 5.75 x 7.75 in" }
       - { label: Cover Image, name: cover_image, widget: image }
       - { label: Gallery, name: gallery, widget: list, field: { label: Image, name: image, widget: image } }

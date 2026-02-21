@@ -8,11 +8,11 @@
 
 <!-- Full-bleed hero image -->
 {#if book.cover_image}
-	<div class="w-full h-[240px] md:h-[480px] lg:h-[860px]">
+	<div class="h-[240px] w-full md:h-[480px] lg:h-[860px]">
 		<img
 			src={images[book.cover_image] || book.cover_image}
 			alt={book.title}
-			class="w-full h-full object-cover"
+			class="h-full w-full object-cover"
 		/>
 	</div>
 {/if}
@@ -21,18 +21,18 @@
 <div
 	class="px-6 pt-8 pb-8
 	       md:px-10 md:pt-12 md:pb-10
-	       lg:pl-[169px] lg:pr-[169px] lg:pt-[72px] lg:pb-[56px]"
+	       lg:pt-[72px] lg:pr-[169px] lg:pb-[56px] lg:pl-[169px]"
 >
 	<h1
-		class="font-sans font-normal
-		       text-[26px] md:text-[36px] lg:text-[48px] mb-3 lg:mb-4"
+		class="mb-3 font-sans
+		       text-[26px] font-normal md:text-[36px] lg:mb-4 lg:text-[48px]"
 	>
-		{book.title}{book.year ? `, ${book.year}` : ''}
+		{book.title}{book.date ? `, ${new Date(book.date).getFullYear()}` : ''}
 	</h1>
 	{#if book.format}
 		<p
-			class="font-sans font-normal
-			       text-[15px] md:text-[18px] lg:text-[20px] text-gray-600 mb-6 lg:mb-8"
+			class="mb-6 font-sans
+			       text-[15px] font-normal text-gray-600 md:text-[18px] lg:mb-8 lg:text-[20px]"
 		>
 			{book.format}
 		</p>
@@ -40,8 +40,8 @@
 
 	{#if component}
 		<div
-			class="font-sans font-normal
-			       text-[15px] md:text-[18px] lg:text-[20px] leading-[1.7] max-w-[720px]"
+			class="max-w-[720px] font-sans
+			       text-[15px] leading-[1.7] font-normal md:text-[18px] lg:text-[20px]"
 		>
 			<svelte:component this={component} />
 		</div>
@@ -65,22 +65,23 @@
 
 <!-- Other Projects -->
 {#if book.other_projects && book.other_projects.length > 0}
-	<section class="py-10 lg:py-[56px] flex flex-col items-center gap-4 px-6">
+	<section class="flex flex-col items-center gap-4 px-6 py-10 lg:py-[56px]">
 		<h2
-			class="font-display
-			       text-[22px] lg:text-[32px] tracking-[0.32px] uppercase mb-2 lg:mb-4"
+			class="mb-2
+			       font-display text-[22px] tracking-[0.32px] uppercase lg:mb-4 lg:text-[32px]"
 		>
 			Other Projects
 		</h2>
 		<p
-			class="font-display
-			       text-[14px] lg:text-[20px] tracking-[2px] lg:tracking-[2.6px]
-			       text-center flex flex-wrap justify-center gap-2 lg:gap-0"
+			class="flex
+			       flex-wrap justify-center gap-2 text-center
+			       font-display text-[14px] tracking-[2px] lg:gap-0 lg:text-[20px] lg:tracking-[2.6px]"
 		>
 			{#each book.other_projects as slug, i}
-				<a href="/art/books/{slug}" class="hover:underline capitalize">
+				<a href="/art/books/{slug}" class="capitalize hover:underline">
 					{slug.replace(/-/g, ' ')}
-				</a>{#if i < book.other_projects.length - 1}<span class="mx-3 lg:mx-4 text-gray-400">|</span>{/if}
+				</a>{#if i < book.other_projects.length - 1}<span class="mx-3 text-gray-400 lg:mx-4">|</span
+					>{/if}
 			{/each}
 		</p>
 	</section>

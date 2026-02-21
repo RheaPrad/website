@@ -16,7 +16,7 @@ export const load: PageLoad = async () => {
 			};
 		})
 		.filter((b) => b.slug && !b.slug.startsWith('.'))
-		.sort((a, b) => (b.metadata.year ?? 0) - (a.metadata.year ?? 0));
+		.sort((a, b) => new Date(b.metadata.date ?? 0).getTime() - new Date(a.metadata.date ?? 0).getTime());
 
 	// Get image glob
 	const images = import.meta.glob('/src/lib/content/art-page/books/**/*.{jpg,jpeg,png,webp}', {

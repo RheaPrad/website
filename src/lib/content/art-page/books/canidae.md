@@ -1,6 +1,6 @@
 ---
 title: Canidae
-year: 2025
+date: 2025-01-01T00:00:00Z
 format: "Children's Picturebook | 3 x 14in"
 cover_image: /src/lib/content/art-page/books/canidae/canidae_pages-to-jpg-0001.webp
 gallery:

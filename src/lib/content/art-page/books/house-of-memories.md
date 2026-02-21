@@ -1,6 +1,6 @@
 ---
 title: House of Memories
-year: 2022
+date: 2022-01-01T00:00:00Z
 format: "Children's Picturebook | 5.75 x 7.75 in"
 cover_image: /src/lib/content/art-page/books/house-of-memories/page-1.webp
 gallery:

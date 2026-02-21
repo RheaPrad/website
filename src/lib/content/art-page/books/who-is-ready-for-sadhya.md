@@ -1,6 +1,6 @@
 ---
 title: Who is Ready for Sadhya?
-year: 2024
+date: 2024-01-01T00:00:00Z
 format: "Children's Picturebook | 11.25 x 9.25cm"
 cover_image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/12_13.webp
 gallery:

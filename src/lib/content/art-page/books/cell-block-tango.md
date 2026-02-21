@@ -1,6 +1,6 @@
 ---
 title: Cell Block Tango
-year: 2024
+date: 2024-01-01T00:00:00Z
 format: "(i'll tell you this in a bit)"
 cover_image: /src/lib/content/art-page/books/chicago/front-cover.webp
 gallery:

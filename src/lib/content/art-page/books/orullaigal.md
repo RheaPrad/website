@@ -1,6 +1,6 @@
 ---
 title: Orullaigal
-year: 2023
+date: 2023-01-01T00:00:00Z
 format: "Dimensions: 18 × 23.5cm"
 cover_image: /src/lib/content/art-page/books/orullaigal/37.webp
 gallery:
