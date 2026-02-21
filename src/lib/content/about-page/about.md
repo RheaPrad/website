@@ -1,5 +1,5 @@
 ---
-photo: /src/lib/content/about-page/rhea-photo.jpg
+photo: /src/lib/content/about-page/rhea-photo.webp
 linkedin: https://linkedin.com/in/rhea-pradeep
 email: hello@rheapradeep.com
 instagram: https://instagram.com

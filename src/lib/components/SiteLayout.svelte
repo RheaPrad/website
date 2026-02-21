@@ -1,5 +1,5 @@
 <script lang="ts">
-	import portrait from '$lib/content/home-page/portrait_r.jpg';
+	import portrait from '$lib/content/home-page/portrait_r.webp';
 	import { Linkedin, Instagram, Mail } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
 

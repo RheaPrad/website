@@ -1,8 +1,8 @@
 <script lang="ts">
-	import portrait from '$lib/content/home-page/portrait_r.jpg';
-	import checkers from '$lib/content/home-page/checkers.jpg';
-	import bookCover from '$lib/content/art-page/books/canidae/canidae_pages-to-jpg-0001.jpg';
-	import comicImage from '$lib/content/art-page/comics/rhea-pradeep_crosscutting.png';
+	import portrait from '$lib/content/home-page/portrait_r.webp';
+	import checkers from '$lib/content/home-page/checkers.webp';
+	import bookCover from '$lib/content/art-page/books/canidae/canidae_pages-to-jpg-0001.webp';
+	import comicImage from '$lib/content/art-page/comics/rhea-pradeep_crosscutting.webp';
 </script>
 
 <!-- Hero -->

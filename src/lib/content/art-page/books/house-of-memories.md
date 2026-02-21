@@ -2,16 +2,16 @@
 title: House of Memories
 year: 2022
 format: "Children's Picturebook | 5.75 x 7.75 in"
-cover_image: /src/lib/content/art-page/books/house-of-memories/page-1.png
+cover_image: /src/lib/content/art-page/books/house-of-memories/page-1.webp
 gallery:
-  - /src/lib/content/art-page/books/house-of-memories/page-1.png
-  - /src/lib/content/art-page/books/house-of-memories/page-14.png
-  - /src/lib/content/art-page/books/house-of-memories/page-23.png
-  - /src/lib/content/art-page/books/house-of-memories/page-24.png
-  - /src/lib/content/art-page/books/house-of-memories/page-26.png
-  - /src/lib/content/art-page/books/house-of-memories/page-46.png
-  - /src/lib/content/art-page/books/house-of-memories/page-47.png
-  - /src/lib/content/art-page/books/house-of-memories/page-52.png
+  - /src/lib/content/art-page/books/house-of-memories/page-1.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-14.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-23.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-24.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-26.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-46.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-47.webp
+  - /src/lib/content/art-page/books/house-of-memories/page-52.webp
 other_projects:
   - canidae
   - who-is-ready-for-sadhya

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import portrait from '$lib/content/home-page/portrait_r.jpg';
+	import portrait from '$lib/content/home-page/portrait_r.webp';
 	import { Linkedin, Instagram, Mail } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
 
@@ -12,8 +12,6 @@
 	const navLinks = [
 		{ href: '/art/books', label: 'books' },
 		{ href: '/art/comics', label: 'comics' },
-		{ href: '/sketchbook', label: 'sketchbook' },
-		{ href: '/other', label: 'other' },
 		{ href: '/about', label: 'contact' }
 	];
 
