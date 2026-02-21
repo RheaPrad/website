@@ -8,7 +8,9 @@ media_folder: src/lib/content
 public_folder: /src/lib/content
 site_url: https://rheaprad.netlify.app
 logout_redirect_url: https://rheaprad.netlify.app
-
+logo:
+  src: /portrait_r.webp
+  show_in_header: true
 collections:
   - name: books
     label: Books
