@@ -17,10 +17,19 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime }
-      - { label: Format, name: format, widget: string, hint: "e.g. Children's Picturebook | 5.75 x 7.75 in" }
+      - {
+          label: Format,
+          name: format,
+          widget: string,
+          hint: "e.g. Children's Picturebook | 5.75 x 7.75 in",
+        }
       - { label: Cover Image, name: cover_image, widget: image }
-      - { label: Gallery, name: gallery, widget: list, field: { label: Image, name: image, widget: image } }
-      - { label: Other Projects, name: other_projects, widget: list, field: { label: Slug, name: slug, widget: string }, hint: "Slugs of related books" }
+      - {
+          label: Gallery,
+          name: gallery,
+          widget: list,
+          field: { label: Image, name: image, widget: image },
+        }
       - { label: Description, name: body, widget: markdown }
 
   - name: comics
@@ -33,6 +42,24 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Image, name: image, widget: image }
 
+  - name: blog
+    label: Blog
+    folder: src/lib/content/blog-page
+    create: true
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string, required: false }
+      - { label: Date, name: date, widget: datetime }
+      - {
+          label: Description,
+          name: description,
+          widget: string,
+          required: false,
+        }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown, required: false }
+
   - name: about
     label: About
     files:
@@ -41,8 +68,23 @@ collections:
         file: src/lib/content/about-page/about.md
         fields:
           - { label: Photo, name: photo, widget: image }
-          - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+          - {
+              label: LinkedIn URL,
+              name: linkedin,
+              widget: string,
+              required: false,
+            }
           - { label: Email, name: email, widget: string, required: false }
-          - { label: Instagram URL, name: instagram, widget: string, required: false }
-          - { label: BlueSky URL, name: bluesky, widget: string, required: false }
+          - {
+              label: Instagram URL,
+              name: instagram,
+              widget: string,
+              required: false,
+            }
+          - {
+              label: BlueSky URL,
+              name: bluesky,
+              widget: string,
+              required: false,
+            }
           - { label: Bio, name: body, widget: markdown }

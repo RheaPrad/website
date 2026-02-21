@@ -23,7 +23,7 @@
 				class="font-sans font-normal
 				       text-[32px] md:text-[40px] lg:text-[48px] mb-8 lg:mb-[40px]"
 			>
-				CONTACT
+				ABOUT
 			</h1>
 
 			{#if component}
@@ -55,8 +55,23 @@
 		</div>
 	</div>
 
+	<!-- Contact section -->
+	<div class="mt-12 lg:mt-[80px]">
+		<h2 class="mb-6 font-sans text-[22px] font-normal md:text-[28px] lg:mb-8 lg:text-[32px]">
+			GET IN TOUCH
+		</h2>
+		{#if about.email}
+			<a
+				href="mailto:{about.email}"
+				class="font-sans text-[18px] text-gray-800 underline hover:opacity-70 md:text-[22px] lg:text-[26px]"
+			>
+				{about.email}
+			</a>
+		{/if}
+	</div>
+
 	<!-- Social icons -->
-	<div class="flex justify-center gap-6 lg:gap-[51px] mt-12 lg:mt-[80px]">
+	<div class="flex justify-start gap-5 mt-8 lg:mt-10">
 		{#if about.linkedin}
 			<a
 				href={about.linkedin}

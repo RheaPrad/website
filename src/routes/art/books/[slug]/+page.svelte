@@ -1,18 +1,19 @@
 <script lang="ts">
+	import { ImageWithSkeleton } from '$lib/components/ui/image-with-skeleton';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
-	const { metadata, component, images } = $derived(data);
+	const { metadata, component, images, otherBooks } = $derived(data);
 	const book = $derived(metadata ?? {});
 </script>
 
 <!-- Full-bleed hero image -->
 {#if book.cover_image}
 	<div class="h-[240px] w-full md:h-[480px] lg:h-[860px]">
-		<img
+		<ImageWithSkeleton
 			src={images[book.cover_image] || book.cover_image}
 			alt={book.title}
-			class="h-full w-full object-cover"
+			fill
 		/>
 	</div>
 {/if}
@@ -57,32 +58,52 @@
 	>
 		<div class="grid grid-cols-2 gap-2 md:gap-3 lg:grid-cols-3 lg:gap-4">
 			{#each book.gallery as image}
-				<img src={images[image] || image} alt={book.title} class="w-full object-cover" />
+				<ImageWithSkeleton
+					src={images[image] || image}
+					alt={book.title}
+					aspectRatio="3/4"
+				/>
 			{/each}
 		</div>
 	</section>
 {/if}
 
-<!-- Other Projects -->
-{#if book.other_projects && book.other_projects.length > 0}
-	<section class="flex flex-col items-center gap-4 px-6 py-10 lg:py-[56px]">
+<!-- More Books -->
+{#if otherBooks && otherBooks.length > 0}
+	<section
+		class="border-t border-gray-100 px-6 py-10
+		       md:px-10 md:py-14
+		       lg:px-[169px] lg:py-[80px]"
+	>
 		<h2
-			class="mb-2
-			       font-display text-[22px] tracking-[0.32px] uppercase lg:mb-4 lg:text-[32px]"
+			class="mb-6 font-display text-[14px] tracking-[2px] uppercase text-gray-400
+			       md:text-[15px] lg:mb-10"
 		>
-			Other Projects
+			More Books
 		</h2>
-		<p
-			class="flex
-			       flex-wrap justify-center gap-2 text-center
-			       font-display text-[14px] tracking-[2px] lg:gap-0 lg:text-[20px] lg:tracking-[2.6px]"
-		>
-			{#each book.other_projects as slug, i}
-				<a href="/art/books/{slug}" class="capitalize hover:underline">
-					{slug.replace(/-/g, ' ')}
-				</a>{#if i < book.other_projects.length - 1}<span class="mx-3 text-gray-400 lg:mx-4">|</span
-					>{/if}
+		<div class="grid grid-cols-2 gap-x-4 gap-y-8 md:gap-x-6 lg:grid-cols-3 lg:gap-x-8">
+			{#each otherBooks as other}
+				<a href="/art/books/{other.slug}" class="group block">
+					{#if other.metadata.cover_image}
+						<div class="mb-3 overflow-hidden">
+							<ImageWithSkeleton
+								src={images[other.metadata.cover_image] || other.metadata.cover_image}
+								alt={other.metadata.title}
+								aspectRatio="3/4"
+								class="transition-transform duration-300 group-hover:scale-[1.02]"
+							/>
+						</div>
+					{/if}
+					<p class="font-sans text-[14px] font-normal group-hover:underline md:text-[16px]">
+						{other.metadata.title}
+					</p>
+					{#if other.metadata.date}
+						<p class="mt-1 font-sans text-[12px] text-gray-500 md:text-[14px]">
+							{new Date(other.metadata.date).getFullYear()}
+						</p>
+					{/if}
+				</a>
 			{/each}
-		</p>
+		</div>
 	</section>
 {/if}

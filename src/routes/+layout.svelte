@@ -12,6 +12,7 @@
 	const navLinks = [
 		{ href: '/art/books', label: 'books' },
 		{ href: '/art/comics', label: 'comics' },
+		{ href: '/blog', label: 'blog' },
 		{ href: '/about', label: 'contact' }
 	];
 
@@ -32,7 +33,7 @@
 
 	<!-- Desktop nav -->
 	<nav
-		class="mx-auto hidden w-[1076px] justify-between font-display text-[20px]
+		class="ml-auto hidden items-center gap-10 font-display text-[20px]
 		       font-medium tracking-[2.6px] text-white lg:flex"
 	>
 		{#each navLinks as link}
@@ -69,12 +70,12 @@
 			<Popover.Content
 				class="mt-8 w-(--bits-popover-content-available-width) rounded-none
 				       border-none
-				       bg-[#363b51]/95 p-0 shadow-none backdrop-blur-sm"
+				       bg-[#363b51] p-0 shadow-none backdrop-blur-sm"
 				align="end"
 				side="bottom"
 				sideOffset={0}
 			>
-				<nav class="flex flex-col gap-8 px-6 py-10">
+				<nav class="flex flex-col justify-end gap-8 px-6 py-10 text-right">
 					{#each navLinks as link}
 						<a
 							href={link.href}
@@ -94,7 +95,9 @@
 </header>
 
 <!-- ─── Page content ──────────────────────────────────────── -->
-{@render children()}
+<main class="flex-1">
+	{@render children()}
+</main>
 
 <!-- ─── Footer ────────────────────────────────────────────── -->
 <footer

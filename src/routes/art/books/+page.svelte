@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ImageWithSkeleton } from '$lib/components/ui/image-with-skeleton';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -18,10 +19,11 @@
 			<a href="/art/books/{book.slug}" class="group block">
 				<div class="mb-3 overflow-hidden md:mb-4">
 					{#if book.metadata.cover_image}
-						<img
+						<ImageWithSkeleton
 							src={images[book.metadata.cover_image] || book.metadata.cover_image}
 							alt={book.metadata.title}
-							class="aspect-3/4 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+							aspectRatio="3/4"
+							class="transition-transform duration-300 group-hover:scale-[1.02]"
 						/>
 					{:else}
 						<div class="flex aspect-3/4 items-center justify-center bg-gray-100">
