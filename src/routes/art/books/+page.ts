@@ -19,15 +19,11 @@ export const load: PageLoad = async () => {
 		.sort((a, b) => (b.metadata.year ?? 0) - (a.metadata.year ?? 0));
 
 	// Get image glob
-	const imageModules = import.meta.glob('/src/lib/content/art-page/books/**/*.{jpg,jpeg,png,webp}', {
+	const images = import.meta.glob('/src/lib/content/art-page/books/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
-		import: 'default'
-	});
-
-	const images: Record<string, string> = {};
-	for (const [path, resolver] of Object.entries(imageModules)) {
-		images[path] = await (resolver as () => Promise<string>)();
-	}
+		import: 'default',
+		eager: true
+	}) as Record<string, string>;
 
 	return { books, images };
 };

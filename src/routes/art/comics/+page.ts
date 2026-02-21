@@ -18,15 +18,11 @@ export const load: PageLoad = async () => {
 		.filter((c) => c.slug && !c.slug.startsWith('.'));
 
 	// Get image glob for resolving paths
-	const imageModules = import.meta.glob('/src/lib/content/art-page/comics/**/*.{jpg,jpeg,png,webp}', {
+	const images = import.meta.glob('/src/lib/content/art-page/comics/**/*.{jpg,jpeg,png,webp}', {
 		query: '?url',
-		import: 'default'
-	});
-
-	const images: Record<string, string> = {};
-	for (const [imagePath, resolver] of Object.entries(imageModules)) {
-		images[imagePath] = await (resolver as () => Promise<string>)();
-	}
+		import: 'default',
+		eager: true
+	}) as Record<string, string>;
 
 	return { comics, images };
 };
