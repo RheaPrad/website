@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 export const prerender = true;
 
 const title = 'Rhea Prad';
-const siteURL = 'https://rheaprad.com';
+const siteURL = 'https://rheapradeep.com';
 const siteDescription = 'The portfolio and blog of Rhea Prad';
 
 export const GET: RequestHandler = async () => {
@@ -34,9 +34,13 @@ export const GET: RequestHandler = async () => {
         imageSrc = `${siteURL}${rawImage}`;
       }
 
+      let html = module.default && typeof module.default.render === 'function' ? module.default.render().html : '';
+      // Ensure all relative links and image sources in the content are absolute
+      html = html.replace(/href="\//g, `href="${siteURL}/`).replace(/src="\//g, `src="${siteURL}/`);
+
       return {
         title: metadata.title || 'Untitled',
-        description: metadata.description || metadata.title || '',
+        description: html || metadata.description || metadata.title || '',
         imageSrc,
         date: metadata.date || new Date().toISOString(),
         url: `${siteURL}${routePath}`
