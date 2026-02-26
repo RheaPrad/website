@@ -1,6 +1,6 @@
 ---
 photo: /src/lib/content/about-page/rhea-photo.webp
-linkedin: linkedin.com/in/rheapradeep
+linkedin: https://linkedin.com/in/rheapradeep
 email: p.rhea20@gmail.com
 instagram: https://www.instagram.com/rhepository/
 bluesky: https://bsky.app/profile/rheapradeep.com
