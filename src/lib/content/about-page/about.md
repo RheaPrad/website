@@ -1,9 +1,9 @@
 ---
 photo: /src/lib/content/about-page/rhea-photo.webp
-linkedin: https://linkedin.com/in/rhea-pradeep
-email: hello@rheapradeep.com
-instagram: https://instagram.com
-bluesky: https://bsky.app
+linkedin: linkedin.com/in/rheapradeep
+email: p.rhea20@gmail.com
+instagram: https://www.instagram.com/rhepository/
+bluesky: https://bsky.app/profile/rheapradeep.com
 ---
 
 Hello there!
