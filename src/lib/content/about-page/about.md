@@ -1,5 +1,5 @@
 ---
-photo: /src/lib/content/rhea-photo.webp
+photo: /src/lib/content/about-page/rhea-photo.webp
 linkedin: https://linkedin.com/in/rheapradeep
 email: p.rhea20@gmail.com
 instagram: https://www.instagram.com/rhepository/
