@@ -8,7 +8,19 @@ const config = {
 	extensions: ['.svelte', '.md'],
 	preprocess: [vitePreprocess(), mdsvex({ extensions: ['.md'], remarkPlugins: [fancyImages] })],
 	compilerOptions: { compatibility: { componentApi: 4 } },
-	kit: { adapter: adapter() }
+	kit: {
+		adapter: adapter(),
+		prerender: {
+			// Don't fail the whole build on links that are still WIP: nav pages
+			// not built yet, or CMS-uploaded assets (e.g. resume) not present.
+			handleHttpError: ({ path, message }) => {
+				const wip = ['/illustrations', '/now'];
+				if (wip.some((p) => path === p || path.startsWith(`${p}/`))) return;
+				if (path.endsWith('.pdf')) return;
+				throw new Error(message);
+			}
+		}
+	}
 };
 
 export default config;

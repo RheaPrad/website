@@ -5,20 +5,71 @@
 	import mailIcon from '$lib/assets/icons/Mail.png';
 	import behanceIcon from '$lib/assets/icons/Behance.png';
 	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
+	import resumeIcon from '$lib/assets/Resume_Icon.png';
+	import EmailLink from '$lib/components/EmailLink.svelte';
 
 	const { data } = $props<{ data: PageData }>();
-	const { metadata, component, images } = $derived(data);
+	const { metadata, component, images, enhanced } = $derived(data);
 	const about = $derived(metadata ?? {});
+	const photoEnhanced = $derived(about.photo ? enhanced?.[about.photo] : undefined);
 
 	const socialLinks = $derived(
 		[
-			{ key: 'linkedin', href: about.linkedin, icon: linkedinIcon, label: 'LinkedIn' },
 			{ key: 'instagram', href: about.instagram, icon: instagramIcon, label: 'Instagram' },
-			{ key: 'email', href: about.email ? `mailto:${about.email}` : '', icon: mailIcon, label: 'Email' },
+			{ key: 'linkedin', href: about.linkedin, icon: linkedinIcon, label: 'LinkedIn' },
+			{
+				key: 'email',
+				href: about.email ? `mailto:${about.email}` : '',
+				icon: mailIcon,
+				label: 'Email'
+			},
 			{ key: 'behance', href: about.behance, icon: behanceIcon, label: 'Behance' },
 			{ key: 'bluesky', href: about.bluesky, icon: blueskyIcon, label: 'Bluesky' }
 		].filter((s) => s.href)
 	);
+
+	// Click-to-copy for mailto links that live inside the markdown bio.
+	// The prose is raw HTML, so we delegate from the container instead of
+	// wrapping each link in <EmailLink>.
+	let isDesktop = $state(false);
+	let copyBubble = $state<{ x: number; y: number } | null>(null);
+	let bubbleTimer: ReturnType<typeof setTimeout>;
+	let proseEl = $state<HTMLElement>();
+
+	$effect(() => {
+		const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+		isDesktop = mq.matches;
+		const onChange = (e: MediaQueryListEvent) => (isDesktop = e.matches);
+		mq.addEventListener('change', onChange);
+		return () => {
+			mq.removeEventListener('change', onChange);
+			clearTimeout(bubbleTimer);
+		};
+	});
+
+	$effect(() => {
+		if (!proseEl) return;
+		proseEl.addEventListener('click', handleProseClick);
+		return () => proseEl?.removeEventListener('click', handleProseClick);
+	});
+
+	async function handleProseClick(event: MouseEvent) {
+		if (!isDesktop || !navigator.clipboard) return;
+		const link = (event.target as HTMLElement).closest('a[href^="mailto:"]');
+		if (!link) return;
+
+		event.preventDefault();
+		const email = (link as HTMLAnchorElement).href.slice('mailto:'.length);
+		try {
+			await navigator.clipboard.writeText(email);
+		} catch {
+			return;
+		}
+		const rect = link.getBoundingClientRect();
+		copyBubble = { x: rect.left + rect.width / 2, y: rect.top };
+		clearTimeout(bubbleTimer);
+		bubbleTimer = setTimeout(() => (copyBubble = null), 1600);
+	}
 </script>
 
 <article
@@ -26,73 +77,130 @@
 	       md:px-10 md:pt-12
 	       lg:pt-[72px] lg:pr-[131px] lg:pb-[80px] lg:pl-[131px]"
 >
-	<!-- Main layout: stacked on mobile, side-by-side on lg -->
-	<div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-[80px]">
-		<!-- Left: heading + bio -->
-		<div class="order-2 min-w-0 flex-1 lg:order-1">
-			<h1
-				class="mb-8 font-sans
-				       text-[32px] font-normal md:text-[40px] lg:mb-[40px] lg:text-[48px]"
-			>
-				ABOUT
-			</h1>
+	<div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-[80px]">
+		<!-- Left: photo, resume button, socials -->
+		<div class="w-full lg:w-2/5 lg:shrink-0">
+			{#if about.photo}
+				<figure class="m-0">
+					{#if photoEnhanced}
+						<enhanced:img
+							src={photoEnhanced}
+							alt="Rhea Pradeep"
+							fetchpriority="high"
+							class="aspect-[3/4] w-full object-cover"
+						/>
+					{:else}
+						<img
+							src={images[about.photo] || about.photo}
+							alt="Rhea Pradeep"
+							width="1200"
+							height="1600"
+							fetchpriority="high"
+							class="aspect-[3/4] w-full object-cover"
+						/>
+					{/if}
+					{#if about.photo_caption}
+						<figcaption
+							class="mt-3 font-sans text-[13px] text-muted-foreground italic md:text-[14px]"
+						>
+							{about.photo_caption}
+						</figcaption>
+					{/if}
+				</figure>
+			{:else}
+				<div class="flex aspect-[3/4] w-full items-center justify-center bg-gray-100">
+					<span class="text-gray-400">Photo</span>
+				</div>
+			{/if}
 
+			{#if about.resume}
+				<a
+					href={about.resume}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="Resume"
+					class="mt-10 block w-[240px] max-w-full transition-transform hover:scale-[1.03]"
+				>
+					<img src={resumeIcon} alt="Resume" class="h-auto w-full" />
+				</a>
+			{/if}
+
+			{#if socialLinks.length}
+				<div class="mt-8 flex justify-start gap-4">
+					{#each socialLinks as s (s.key)}
+						{#if s.href.startsWith('mailto:')}
+							<EmailLink
+								email={s.href.slice('mailto:'.length)}
+								label={s.label}
+								side="top"
+								class="block h-[52px] w-[52px] transition-transform hover:scale-110"
+							>
+								<img src={s.icon} alt={s.label} class="h-full w-full object-contain" />
+							</EmailLink>
+						{:else}
+							<a
+								href={s.href}
+								aria-label={s.label}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="block h-[52px] w-[52px] transition-transform hover:scale-110"
+							>
+								<img src={s.icon} alt={s.label} class="h-full w-full object-contain" />
+							</a>
+						{/if}
+					{/each}
+				</div>
+			{/if}
+		</div>
+
+		<!-- Right: bio content -->
+		<div class="max-w-3xl min-w-0 flex-1">
 			{#if component}
 				<div
-					class="font-sans text-[15px]
-					       leading-[1.7] font-normal md:text-[18px] lg:text-[20px]"
+					bind:this={proseEl}
+					class="about-prose font-sans text-[15px] leading-[1.65] font-normal md:text-[17px]"
 				>
 					<svelte:component this={component} />
 				</div>
 			{/if}
 		</div>
-
-		<!-- Right: photo -->
-		<div class="order-1 w-full lg:order-2 lg:w-[564px] lg:shrink-0">
-			{#if about.photo}
-				<img
-					src={images[about.photo] || about.photo}
-					alt="Rhea Pradeep"
-					class="h-[280px] w-full object-cover object-top md:h-[420px] lg:h-[680px]"
-				/>
-			{:else}
-				<div
-					class="flex h-[280px] w-full items-center justify-center
-					       bg-gray-100 md:h-[420px] lg:h-[680px]"
-				>
-					<span class="text-gray-400">Photo</span>
-				</div>
-			{/if}
-		</div>
-	</div>
-
-	<!-- Contact section -->
-	<div class="mt-12 lg:mt-[80px]">
-		<h2 class="mb-6 font-sans text-[22px] font-normal md:text-[28px] lg:mb-8 lg:text-[32px]">
-			GET IN TOUCH
-		</h2>
-		{#if about.email}
-			<a
-				href="mailto:{about.email}"
-				class="font-sans text-[18px] text-gray-800 underline hover:opacity-70 md:text-[22px] lg:text-[26px]"
-			>
-				{about.email}
-			</a>
-		{/if}
-	</div>
-
-	<!-- Social icons -->
-	<div class="mt-8 flex justify-start gap-4 lg:mt-10">
-		{#each socialLinks as s (s.key)}
-			<a
-				href={s.href}
-				aria-label={s.label}
-				target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-				rel="noopener noreferrer"
-				class="block h-[39px] w-[39px] transition-transform hover:scale-110"
-			>
-				<img src={s.icon} alt={s.label} class="h-full w-full object-contain" />
-			</a>
-		{/each}
 	</div>
 </article>
+
+{#if copyBubble}
+	<div
+		class="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-full rounded-md bg-foreground
+		       px-3 py-1.5 text-xs text-background shadow-md"
+		style="left: {copyBubble.x}px; top: {copyBubble.y - 8}px;"
+		role="status"
+	>
+		Copied!
+	</div>
+{/if}
+
+<style>
+	.about-prose :global(h2) {
+		color: var(--primary);
+		font-size: 1.25rem;
+		font-weight: 400;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.about-prose :global(h2:first-child) {
+		margin-top: 0;
+	}
+
+	.about-prose :global(p) {
+		margin-bottom: 1.25rem;
+	}
+
+	.about-prose :global(a) {
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.about-prose :global(a:hover) {
+		opacity: 0.7;
+	}
+</style>

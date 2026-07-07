@@ -14,9 +14,17 @@ export const load: PageLoad = async () => {
 		eager: true
 	}) as Record<string, string>;
 
+	// Optimized (resized, responsive avif/webp) versions via @sveltejs/enhanced-img
+	const enhanced = import.meta.glob('/src/lib/content/about-page/**/*.{jpg,jpeg,png,webp}', {
+		query: '?enhanced',
+		import: 'default',
+		eager: true
+	}) as Record<string, unknown>;
+
 	return {
 		component: aboutModule?.default,
 		metadata: aboutModule?.metadata ?? {},
-		images
+		images,
+		enhanced
 	};
 };

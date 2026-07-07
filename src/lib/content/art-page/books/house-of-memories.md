@@ -1,8 +1,10 @@
 ---
 title: House of Memories
 date: 2022-01-01T00:00:00Z
+category: Picture Books
+dimensions: "Children's Picturebook | 5.75 x 7.75 in"
 format: "Children's Picturebook | 5.75 x 7.75 in"
-cover_image: /src/lib/content/art-page/books/house-of-memories/page-1.webp
+cover_image: /src/lib/content/art-page/books/house-of-memories/cover.webp
 gallery:
   - /src/lib/content/art-page/books/house-of-memories/page-1.webp
   - /src/lib/content/art-page/books/house-of-memories/page-14.webp
@@ -15,6 +17,9 @@ gallery:
 other_projects:
   - canidae
   - who-is-ready-for-sadhya
+nav_theme: Auto
+title_color_auto: "rgb(123, 67, 39)"
+nav_text_auto: dark
 ---
 
 A children's picturebook about the spaces we carry with us — the corners of childhood homes, the smell of a grandmother's kitchen, and the way memory lives in the walls of the places we love.

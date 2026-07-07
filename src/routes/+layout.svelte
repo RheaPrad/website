@@ -3,7 +3,9 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import portrait from '$lib/content/home-page/portrait_r.webp';
 	import * as Popover from '$lib/components/ui/popover';
+	import EmailLink from '$lib/components/EmailLink.svelte';
 	import { page } from '$app/state';
+	import { navState } from '$lib/nav.svelte';
 	import linkedinIcon from '$lib/assets/icons/LinkedIn.png';
 	import instagramIcon from '$lib/assets/icons/Instagram.png';
 	import mailIcon from '$lib/assets/icons/Mail.png';
@@ -14,13 +16,24 @@
 	// Home is a full-bleed carousel with its own overlaid social icons
 	const isHome = $derived(page.url.pathname === '/');
 
+	// Pages (e.g. book details) can make the header a transparent overlay.
+	// SSR reads page.data.nav; the client refines via the navState store.
+	const transparentNav = $derived(navState.transparent || !!page.data?.nav?.transparent);
+	const navDark = $derived(
+		transparentNav &&
+			(navState.transparent ? navState.text : (page.data?.nav?.text ?? 'light')) === 'dark'
+	);
+	const navTextClass = $derived(navDark ? 'text-gray-900' : 'text-white');
+	const barBg = $derived(navDark ? 'bg-gray-900' : 'bg-white');
+
 	let mobileOpen = $state(false);
 
 	const navLinks = [
-		{ href: '/art/books', label: 'books' },
-		{ href: '/art/comics', label: 'comics' },
+		{ href: '/books', label: 'books' },
+		{ href: '/illustrations', label: 'illustrations' },
 		{ href: '/blog', label: 'blog' },
-		{ href: '/about', label: 'contact' }
+		{ href: '/about', label: 'about' },
+		{ href: '/now', label: 'now' }
 	];
 
 	const socialLinks = [
@@ -36,7 +49,10 @@
 </svelte:head>
 
 <!-- ─── Header ─────────────────────────────────────────────── -->
-<header class="flex h-[109px] items-center bg-primary px-6 lg:px-[26px]">
+<header
+	class="z-50 flex h-[109px] items-center px-6 lg:px-[26px]
+	       {transparentNav ? 'absolute inset-x-0 top-0 bg-transparent' : 'bg-primary'}"
+>
 	<!-- Logo -->
 	<a href="/" class="flex-shrink-0">
 		<img class="h-[58px] w-[58px] rounded-full object-cover" src={portrait} alt="Rhea Pradeep" />
@@ -45,7 +61,7 @@
 	<!-- Desktop nav -->
 	<nav
 		class="ml-auto hidden items-center gap-10 font-display text-[20px]
-		       font-medium tracking-[2.6px] text-white lg:flex"
+		       font-medium tracking-[2.6px] lg:flex {navTextClass}"
 	>
 		{#each navLinks as link}
 			<a href={link.href} class="transition-opacity hover:opacity-70">{link.label}</a>
@@ -59,17 +75,17 @@
 				{#snippet child({ props })}
 					<button
 						{...props}
-						class="flex touch-manipulation items-center gap-2.5 text-white"
+						class="flex touch-manipulation items-center gap-2.5 {navTextClass}"
 						aria-label="Toggle menu"
 					>
 						<div class="relative flex h-8 w-5 items-center justify-center">
 							<div class="relative size-5">
 								<span
-									class="absolute start-0 block h-0.5 w-5 bg-white transition-all duration-100
+									class="absolute start-0 block h-0.5 w-5 {barBg} transition-all duration-100
 									       {mobileOpen ? 'top-[0.5rem] -rotate-45' : 'top-1'}"
 								></span>
 								<span
-									class="absolute start-0 block h-0.5 w-5 bg-white transition-all duration-100
+									class="absolute start-0 block h-0.5 w-5 {barBg} transition-all duration-100
 									       {mobileOpen ? 'top-[0.5rem] rotate-45' : 'top-3'}"
 								></span>
 							</div>
@@ -112,21 +128,33 @@
 
 <!-- ─── Footer ────────────────────────────────────────────── -->
 {#if !isHome}
-<footer
-	class="flex h-[109px] items-center justify-center gap-6 bg-primary
+	<footer
+		class="flex h-[109px] items-center justify-center gap-6 bg-primary
 	       px-6 lg:justify-end lg:gap-[51px] lg:px-[26px]"
->
-	{#each socialLinks as s (s.label)}
-		<a
-			href={s.href}
-			aria-label={s.label}
-			target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-			rel="noopener noreferrer"
-			class="flex h-[39px] w-[39px] items-center justify-center rounded-full bg-white
-			       transition-transform hover:scale-110"
-		>
-			<img src={s.icon} alt={s.label} class="h-[30px] w-[30px] object-contain" />
-		</a>
-	{/each}
-</footer>
+	>
+		{#each socialLinks as s (s.label)}
+			{#if s.href.startsWith('mailto:')}
+				<EmailLink
+					email={s.href.slice('mailto:'.length)}
+					label={s.label}
+					side="top"
+					class="flex size-12 items-center justify-center rounded-full
+				       transition-transform hover:scale-110"
+				>
+					<img src={s.icon} alt={s.label} class=" object-contain" />
+				</EmailLink>
+			{:else}
+				<a
+					href={s.href}
+					aria-label={s.label}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex size-12 items-center justify-center rounded-full
+				       transition-transform hover:scale-110"
+				>
+					<img src={s.icon} alt={s.label} class=" object-contain" />
+				</a>
+			{/if}
+		{/each}
+	</footer>
 {/if}

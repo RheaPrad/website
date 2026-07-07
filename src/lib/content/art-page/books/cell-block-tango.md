@@ -1,8 +1,9 @@
 ---
 title: Cell Block Tango
 date: 2024-01-01T00:00:00Z
+category: Graphic Novels
 format: (i'll tell you this in a bit)
-cover_image: /src/lib/content/art-page/books/chicago/front-cover.webp
+cover_image: /src/lib/content/art-page/books/chicago/cover.webp
 gallery:
   - /src/lib/content/art-page/books/chicago/front-cover.webp
   - /src/lib/content/art-page/books/chicago/px_20241212_213958262.webp
@@ -23,6 +24,9 @@ gallery:
 other_projects:
   - house-of-memories
   - who-is-ready-for-sadhya
+nav_theme: Auto
+title_color_auto: "rgb(166, 165, 162)"
+nav_text_auto: dark
 ---
 
 An illustrated book inspired by the musical Chicago. More details coming soon.

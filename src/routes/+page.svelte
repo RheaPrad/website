@@ -7,6 +7,7 @@
 	import mailIcon from '$lib/assets/icons/Mail.png';
 	import behanceIcon from '$lib/assets/icons/Behance.png';
 	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
+	import EmailLink from '$lib/components/EmailLink.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -110,19 +111,34 @@
 	<!-- Social icons (above the click surface, so links stay clickable) -->
 	<div class="absolute right-5 bottom-5 z-20 flex items-center gap-1.5">
 		{#each socialLinks as s (s.key)}
-			<a
-				href={s.href}
-				aria-label={s.label}
-				target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-				rel="noopener noreferrer"
-				class="block h-10 w-10 transition-transform hover:scale-110"
-			>
-				<img
-					src={s.icon}
-					alt={s.label}
-					class="h-full w-full object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]"
-				/>
-			</a>
+			{#if s.href.startsWith('mailto:')}
+				<EmailLink
+					email={s.href.slice('mailto:'.length)}
+					label={s.label}
+					side="top"
+					class="block h-10 w-10 transition-transform hover:scale-110"
+				>
+					<img
+						src={s.icon}
+						alt={s.label}
+						class="h-full w-full object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]"
+					/>
+				</EmailLink>
+			{:else}
+				<a
+					href={s.href}
+					aria-label={s.label}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="block h-10 w-10 transition-transform hover:scale-110"
+				>
+					<img
+						src={s.icon}
+						alt={s.label}
+						class="h-full w-full object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]"
+					/>
+				</a>
+			{/if}
 		{/each}
 	</div>
 </section>

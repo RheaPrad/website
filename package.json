@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
+		"prebuild": "node scripts/extract-book-colors.mjs",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -40,6 +41,7 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
+		"sharp": "^0.35.3",
 		"svelte": "^5.51.0",
 		"svelte-check": "^4.3.6",
 		"svelte-sonner": "^1.1.1",

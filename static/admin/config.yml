@@ -22,17 +22,75 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime }
       - {
-          label: Format,
-          name: format,
-          widget: string,
-          hint: "e.g. Children's Picturebook | 5.75 x 7.75 in",
+          label: Category,
+          name: category,
+          widget: select,
+          default: Miscellany,
+          options:
+            [
+              "Artist Books",
+              "Picture Books",
+              "Graphic Novels",
+              "Miscellany",
+            ],
         }
-      - { label: Cover Image, name: cover_image, widget: image }
+      - {
+          label: Pages,
+          name: pages,
+          widget: string,
+          required: false,
+          hint: "e.g. 120",
+        }
+      - {
+          label: Dimensions,
+          name: dimensions,
+          widget: string,
+          required: false,
+          hint: "e.g. 18 × 23.5cm",
+        }
+      - {
+          label: Grid Cover (books index),
+          name: cover_image,
+          widget: image,
+        }
+      - {
+          label: Hero Image (top of detail page),
+          name: hero_image,
+          widget: image,
+          required: false,
+          hint: "Full-bleed image at the top of the book's page. Falls back to the cover.",
+        }
+      - {
+          label: Title Colour override,
+          name: title_color,
+          widget: string,
+          required: false,
+          hint: "Optional CSS colour. Leave blank to auto-pull the dominant colour from the hero.",
+        }
+      - {
+          label: Nav Text on Hero,
+          name: nav_theme,
+          widget: select,
+          default: Auto,
+          options: ["Auto", "Light text", "Dark text"],
+        }
       - {
           label: Gallery,
           name: gallery,
           widget: list,
           field: { label: Image, name: image, widget: image },
+        }
+      - {
+          label: Other Projects,
+          name: other_projects,
+          widget: relation,
+          required: false,
+          multiple: true,
+          collection: books,
+          value_field: "{{slug}}",
+          search_fields: ["title"],
+          display_fields: ["title"],
+          hint: "Leave empty to show the 3 most recent books.",
         }
       - { label: Description, name: body, widget: markdown }
 
@@ -105,6 +163,20 @@ collections:
         file: src/lib/content/about-page/about.md
         fields:
           - { label: Photo, name: photo, widget: image }
+          - {
+              label: Photo Caption,
+              name: photo_caption,
+              widget: string,
+              required: false,
+              hint: "Italic caption shown under the photo.",
+            }
+          - {
+              label: Resume,
+              name: resume,
+              widget: file,
+              required: false,
+              hint: "PDF or link the RESUME button points to.",
+            }
           - {
               label: LinkedIn URL,
               name: linkedin,
