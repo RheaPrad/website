@@ -6,7 +6,7 @@ linkedin: https://linkedin.com/in/rheapradeep
 email: rheapradeep01@gmail.com
 instagram: https://www.instagram.com/rhepository/
 bluesky: https://bsky.app/profile/rheapradeep.com
-behance: https://www.behance.net/rheapradeep
+behance: https://www.behance.net/rheapradeep01
 ---
 
 ## Hello there!
