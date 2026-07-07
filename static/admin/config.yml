@@ -78,7 +78,12 @@ collections:
           label: Gallery,
           name: gallery,
           widget: list,
-          field: { label: Image, name: image, widget: image },
+          summary: "{{fields.caption}}",
+          fields:
+            [
+              { label: Image, name: image, widget: image },
+              { label: Caption, name: caption, widget: string, required: false },
+            ],
         }
       - {
           label: Other Projects,
@@ -108,6 +113,13 @@ collections:
           widget: select,
           default: Illustration,
           options: ["Comics", "Illustration", "Character Design", "Miscellany"],
+        }
+      - {
+          label: Caption,
+          name: caption,
+          widget: string,
+          required: false,
+          hint: "Shown under the image in the lightbox. Falls back to the category.",
         }
       - { label: Date, name: date, widget: datetime, required: false }
       - { label: Image, name: image, widget: image }

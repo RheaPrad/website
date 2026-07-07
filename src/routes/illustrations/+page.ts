@@ -24,6 +24,7 @@ export const load: PageLoad = async () => {
 				slug,
 				title: meta.title ?? '',
 				category: meta.category ?? 'Miscellany',
+				caption: meta.caption ?? '',
 				date: meta.date ?? '',
 				src
 			};

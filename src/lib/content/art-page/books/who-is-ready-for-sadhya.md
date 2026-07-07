@@ -6,12 +6,18 @@ dimensions: "Children's Picturebook | 11.25 x 9.25cm"
 format: "Children's Picturebook | 11.25 x 9.25cm"
 cover_image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/cover.webp
 gallery:
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/6_7.webp
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/8_9.webp
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/12_13.webp
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/14_15.webp
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/16_17.webp
-  - /src/lib/content/art-page/books/who-is-ready-for-sadhya/30_31.webp
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/6_7.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/8_9.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/12_13.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/14_15.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/16_17.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/who-is-ready-for-sadhya/30_31.webp
+    caption: ""
 other_projects:
   - house-of-memories
   - cell-block-tango

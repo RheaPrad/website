@@ -6,14 +6,22 @@ dimensions: "Children's Picturebook | 5.75 x 7.75 in"
 format: "Children's Picturebook | 5.75 x 7.75 in"
 cover_image: /src/lib/content/art-page/books/house-of-memories/cover.webp
 gallery:
-  - /src/lib/content/art-page/books/house-of-memories/page-1.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-14.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-23.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-24.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-26.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-46.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-47.webp
-  - /src/lib/content/art-page/books/house-of-memories/page-52.webp
+  - image: /src/lib/content/art-page/books/house-of-memories/page-1.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-14.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-23.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-24.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-26.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-46.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-47.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/house-of-memories/page-52.webp
+    caption: ""
 other_projects:
   - canidae
   - who-is-ready-for-sadhya

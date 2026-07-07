@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ImageWithSkeleton } from '$lib/components/ui/image-with-skeleton';
+	import { Lightbox, type LightboxItem } from '$lib/components/ui/lightbox';
 	import { getHeroColors } from '$lib/image-color';
 	import { navState, resetNav } from '$lib/nav.svelte';
 	import type { PageData } from './$types';
@@ -51,6 +52,30 @@
 			.filter(Boolean)
 			.join('  |  ')
 	);
+
+	// Normalise gallery (supports both plain-string and {image, caption} items)
+	const gallery = $derived(
+		(book.gallery ?? []).map((g: string | { image: string; caption?: string }) => {
+			const path = typeof g === 'string' ? g : g.image;
+			return { src: images[path] || path, caption: typeof g === 'string' ? '' : (g.caption ?? '') };
+		})
+	);
+
+	// Lightbox for the gallery
+	let lbOpen = $state(false);
+	let lbIndex = $state(0);
+	const lightboxItems = $derived<LightboxItem[]>(
+		gallery.map((g: { src: string; caption: string }) => ({
+			src: g.src,
+			title: book.title,
+			caption: g.caption
+		}))
+	);
+
+	function openLightbox(i: number) {
+		lbIndex = i;
+		lbOpen = true;
+	}
 </script>
 
 <!-- Full-bleed hero — starts at the very top, variable height -->
@@ -97,16 +122,23 @@
 </article>
 
 <!-- Masonry gallery -->
-{#if book.gallery && book.gallery.length > 0}
+{#if gallery.length > 0}
 	<section class="mx-auto max-w-[1180px] px-6 pt-6 pb-14 md:pt-8 md:pb-20 lg:px-10">
 		<div class="columns-2 gap-2 md:gap-3 lg:columns-3 lg:gap-4">
-			{#each book.gallery as image (image)}
-				<img
-					src={images[image] || image}
-					alt={book.title}
-					loading="lazy"
-					class="mb-2 block w-full break-inside-avoid md:mb-3 lg:mb-4"
-				/>
+			{#each gallery as image, i (image.src)}
+				<button
+					type="button"
+					onclick={() => openLightbox(i)}
+					class="group mb-2 block w-full break-inside-avoid overflow-hidden md:mb-3 lg:mb-4"
+					aria-label={image.caption || book.title}
+				>
+					<img
+						src={image.src}
+						alt={image.caption || book.title}
+						loading="lazy"
+						class="block w-full transition-transform duration-500 group-hover:scale-[1.03]"
+					/>
+				</button>
 			{/each}
 		</div>
 	</section>
@@ -144,3 +176,5 @@
 		</div>
 	</section>
 {/if}
+
+<Lightbox items={lightboxItems} bind:open={lbOpen} bind:index={lbIndex} />

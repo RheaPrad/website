@@ -1,25 +1,28 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
-	import * as Dialog from '$lib/components/ui/dialog';
+	import { Lightbox, type LightboxItem } from '$lib/components/ui/lightbox';
 	import type { PageData } from './$types';
 
-	type Item = { slug: string; title: string; category: string; src: string };
+	type Item = { slug: string; title: string; category: string; caption?: string; src: string };
 
 	const { data } = $props<{ data: PageData }>();
 	const { items, categories } = $derived(data);
 
 	let active = $state('All');
-	const filtered = $derived(
+	const filtered = $derived<Item[]>(
 		active === 'All' ? items : items.filter((i: Item) => i.category === active)
 	);
 
-	// Lightbox state
+	// Lightbox: navigable across the currently-filtered set
 	let open = $state(false);
-	let selected = $state<Item | null>(null);
+	let index = $state(0);
+	const lightboxItems = $derived<LightboxItem[]>(
+		filtered.map((i) => ({ src: i.src, title: i.title, caption: i.caption || i.category }))
+	);
 
-	function openLightbox(item: Item) {
-		selected = item;
+	function openLightbox(i: number) {
+		index = i;
 		open = true;
 	}
 </script>
@@ -45,10 +48,10 @@
 
 	<!-- Masonry grid -->
 	<div class="mx-auto max-w-[1180px] columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4">
-		{#each filtered as item (item.slug)}
+		{#each filtered as item, i (item.slug)}
 			<button
 				type="button"
-				onclick={() => openLightbox(item)}
+				onclick={() => openLightbox(i)}
 				animate:flip={{ duration: 400 }}
 				in:fade={{ duration: 250 }}
 				out:fade={{ duration: 150 }}
@@ -70,21 +73,4 @@
 	{/if}
 </section>
 
-<!-- Lightbox -->
-<Dialog.Root bind:open>
-	<Dialog.Content
-		class="w-auto max-w-[94vw] border-none bg-transparent p-0 shadow-none ring-0 sm:max-w-[88vw]"
-	>
-		{#if selected}
-			<img
-				src={selected.src}
-				alt={selected.title}
-				class="mx-auto max-h-[86vh] w-auto max-w-full object-contain"
-			/>
-			<Dialog.Title class="sr-only">{selected.title}</Dialog.Title>
-			{#if selected.title}
-				<p class="mt-3 text-center font-sans text-[14px] text-white/90">{selected.title}</p>
-			{/if}
-		{/if}
-	</Dialog.Content>
-</Dialog.Root>
+<Lightbox items={lightboxItems} bind:open bind:index />

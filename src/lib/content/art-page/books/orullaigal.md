@@ -8,16 +8,26 @@ cover_image: /src/lib/content/art-page/books/orullaigal/cover.webp
 hero_image: /src/lib/content/art-page/books/orullaigal/cover-full.webp
 nav_theme: Auto
 gallery:
-  - /src/lib/content/art-page/books/orullaigal/37.webp
-  - /src/lib/content/art-page/books/orullaigal/50.webp
-  - /src/lib/content/art-page/books/orullaigal/53.webp
-  - /src/lib/content/art-page/books/orullaigal/57.webp
-  - /src/lib/content/art-page/books/orullaigal/83.webp
-  - /src/lib/content/art-page/books/orullaigal/84.webp
-  - /src/lib/content/art-page/books/orullaigal/94.webp
-  - /src/lib/content/art-page/books/orullaigal/95.webp
-  - /src/lib/content/art-page/books/orullaigal/97.webp
-  - /src/lib/content/art-page/books/orullaigal/rheapradeep_finalimage_01.webp
+  - image: /src/lib/content/art-page/books/orullaigal/37.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/50.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/53.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/57.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/83.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/84.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/94.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/95.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/97.webp
+    caption: ""
+  - image: /src/lib/content/art-page/books/orullaigal/rheapradeep_finalimage_01.webp
+    caption: ""
 other_projects:
   - house-of-memories
   - who-is-ready-for-sadhya
