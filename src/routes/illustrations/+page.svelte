@@ -2,6 +2,7 @@
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 	import { Lightbox, type LightboxItem } from '$lib/components/ui/lightbox';
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	type Item = { slug: string; title: string; category: string; caption?: string; src: string };
@@ -26,6 +27,11 @@
 		open = true;
 	}
 </script>
+
+<Seo
+	title="Illustrations"
+	description="Illustrations, comics, and character design by Rhea Pradeep."
+/>
 
 <section class="px-6 pt-8 pb-14 md:px-10 md:pt-10 lg:px-[100px] lg:pt-[56px] lg:pb-[80px]">
 	<!-- Filter buttons -->

@@ -30,4 +30,3 @@ title_color_auto: "rgb(123, 67, 39)"
 nav_text_auto: dark
 ---
 
-A children's picturebook about the spaces we carry with us — the corners of childhood homes, the smell of a grandmother's kitchen, and the way memory lives in the walls of the places we love.

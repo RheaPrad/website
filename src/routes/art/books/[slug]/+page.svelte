@@ -57,12 +57,9 @@
 		       lg:px-[169px] lg:pb-[80px]"
 	>
 		<div class="grid grid-cols-2 gap-2 md:gap-3 lg:grid-cols-3 lg:gap-4">
-			{#each book.gallery as image}
-				<ImageWithSkeleton
-					src={images[image] || image}
-					alt={book.title}
-					aspectRatio="3/4"
-				/>
+			{#each book.gallery as g}
+				{@const image = typeof g === 'string' ? g : g.image}
+				<ImageWithSkeleton src={images[image] || image} alt={book.title} aspectRatio="3/4" />
 			{/each}
 		</div>
 	</section>

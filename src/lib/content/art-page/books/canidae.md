@@ -40,5 +40,3 @@ nav_theme: Auto
 title_color_auto: "rgb(40, 73, 87)"
 nav_text_auto: dark
 ---
-
-A children's picturebook exploring the world of the dog family — wolves, foxes, and the dogs we call our own. Canidae is a story about belonging, wildness, and what it means to find your place between two worlds.

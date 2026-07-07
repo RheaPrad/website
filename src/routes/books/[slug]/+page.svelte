@@ -3,11 +3,15 @@
 	import { Lightbox, type LightboxItem } from '$lib/components/ui/lightbox';
 	import { getHeroColors } from '$lib/image-color';
 	import { navState, resetNav } from '$lib/nav.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
 	const { metadata, component, hero, images, otherBooks, nav } = $derived(data);
 	const book = $derived(metadata ?? {});
+
+	const seo = $derived(book.seo ?? {});
+	const shareImage = $derived((seo.image && (images[seo.image] || seo.image)) || hero || '');
 
 	// SSR-safe defaults; refined client-side from the hero image
 	let titleColor = $state<string>('');
@@ -77,6 +81,17 @@
 		lbOpen = true;
 	}
 </script>
+
+<Seo
+	type="article"
+	title={seo.title || book.title}
+	description={seo.description ||
+		`${book.title}${book.category ? ` — ${book.category}` : ''} by Rhea Pradeep.`}
+	image={shareImage}
+	published={book.date}
+	keywords={seo.keywords}
+	noindex={seo.noindex}
+/>
 
 <!-- Full-bleed hero — starts at the very top, variable height -->
 {#if hero}

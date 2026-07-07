@@ -1,9 +1,17 @@
 <script lang="ts">
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
 	const { metadata, component, images } = $derived(data);
 	const post = $derived(metadata ?? {});
+
+	const seo = $derived(post.seo ?? {});
+	const shareImage = $derived(
+		(seo.image && (images[seo.image] || seo.image)) ||
+			(post.image && (images[post.image] || post.image)) ||
+			''
+	);
 
 	function formatDate(dateStr: string) {
 		return new Date(dateStr).toLocaleDateString('en-GB', {
@@ -17,6 +25,16 @@
 		return new Date(dateStr).toISOString().split('T')[0];
 	}
 </script>
+
+<Seo
+	type="article"
+	title={seo.title || post.title || 'Note'}
+	description={seo.description || post.description}
+	image={shareImage}
+	published={post.date}
+	keywords={seo.keywords}
+	noindex={seo.noindex}
+/>
 
 <article
 	class="h-entry px-6 pt-10 pb-16

@@ -7,6 +7,7 @@
 	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
 	import resumeIcon from '$lib/assets/Resume_Icon.png';
 	import EmailLink from '$lib/components/EmailLink.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	const { data } = $props<{ data: PageData }>();
 	const { metadata, component, images, enhanced } = $derived(data);
@@ -26,6 +27,13 @@
 			{ key: 'behance', href: about.behance, icon: behanceIcon, label: 'Behance' },
 			{ key: 'bluesky', href: about.bluesky, icon: blueskyIcon, label: 'Bluesky' }
 		].filter((s) => s.href)
+	);
+
+	const seo = $derived(about.seo ?? {});
+	const shareImage = $derived(
+		(seo.image && (images[seo.image] || seo.image)) ||
+			(about.photo && (images[about.photo] || about.photo)) ||
+			''
 	);
 
 	// Click-to-copy for mailto links that live inside the markdown bio.
@@ -71,6 +79,16 @@
 		bubbleTimer = setTimeout(() => (copyBubble = null), 1600);
 	}
 </script>
+
+<Seo
+	title="About"
+	type="profile"
+	description={seo.description ||
+		"About Rhea Pradeep — an Indian illustrator and visual artist working across comics, picture books and bookmaking."}
+	image={shareImage}
+	keywords={seo.keywords}
+	noindex={seo.noindex}
+/>
 
 <article
 	class="px-6 pt-10 pb-12

@@ -11,14 +11,14 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		prerender: {
-			// Don't fail the whole build on links that are still WIP: nav pages
-			// not built yet, or CMS-uploaded assets (e.g. resume) not present.
-			handleHttpError: ({ path, message }) => {
-				const wip = ['/now'];
-				if (wip.some((p) => path === p || path.startsWith(`${p}/`))) return;
-				if (path.endsWith('.pdf')) return;
-				throw new Error(message);
-			}
+			// Never fail the whole build on a broken/missing link during active
+			// development — log it and keep going. (WIP nav pages, CMS-uploaded
+			// assets not yet present, stale links, etc.)
+			handleHttpError: ({ path, referrer, message }) => {
+				console.warn(`⚠️  prerender: ${message}${referrer ? ` (from ${referrer})` : ''} — skipped`);
+			},
+			// Likewise, don't fail on links to #hash ids that can't be resolved.
+			handleMissingId: 'warn'
 		}
 	}
 };

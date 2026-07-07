@@ -45,4 +45,3 @@ title_color_auto: "rgb(166, 165, 162)"
 nav_text_auto: dark
 ---
 
-An illustrated book inspired by the musical Chicago. More details coming soon.

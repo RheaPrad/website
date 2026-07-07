@@ -1,6 +1,5 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
 	import portrait from '$lib/content/home-page/portrait_r.webp';
 	import * as Popover from '$lib/components/ui/popover';
 	import EmailLink from '$lib/components/EmailLink.svelte';
@@ -31,9 +30,9 @@
 	const navLinks = [
 		{ href: '/books', label: 'books' },
 		{ href: '/illustrations', label: 'illustrations' },
-		{ href: '/blog', label: 'blog' },
+		// { href: '/blog', label: 'blog' },
 		{ href: '/about', label: 'about' },
-		{ href: '/now', label: 'now' }
+		// { href: '/now', label: 'now' }
 	];
 
 	const socialLinks = [
@@ -45,7 +44,9 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<!-- Favicon uses the portrait logo for now; a dedicated icon can replace it later. -->
+	<link rel="icon" href={portrait} />
+	<link rel="apple-touch-icon" href={portrait} />
 </svelte:head>
 
 <!-- ─── Header ─────────────────────────────────────────────── -->

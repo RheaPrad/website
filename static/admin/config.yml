@@ -97,6 +97,27 @@ collections:
           display_fields: ["title"],
           hint: "Leave empty to show the 3 most recent books.",
         }
+      - label: SEO
+        name: seo
+        widget: object
+        collapsed: true
+        required: false
+        hint: "Optional. Overrides the automatic search/social title, description and share image for this book."
+        fields:
+          - { label: SEO Title, name: title, widget: string, required: false }
+          - {
+              label: SEO Description,
+              name: description,
+              widget: text,
+              required: false,
+            }
+          - {
+              label: Share Image,
+              name: image,
+              widget: image,
+              required: false,
+              hint: "1200×630 recommended. Falls back to the hero, then the site default.",
+            }
       - { label: Description, name: body, widget: markdown }
 
   - name: illustrations
@@ -150,6 +171,27 @@ collections:
           required: false,
         }
       - { label: Image, name: image, widget: image, required: false }
+      - label: SEO
+        name: seo
+        widget: object
+        collapsed: true
+        required: false
+        hint: "Optional. Overrides the automatic search/social title, description and share image for this post."
+        fields:
+          - { label: SEO Title, name: title, widget: string, required: false }
+          - {
+              label: SEO Description,
+              name: description,
+              widget: text,
+              required: false,
+            }
+          - {
+              label: Share Image,
+              name: image,
+              widget: image,
+              required: false,
+              hint: "1200×630 recommended. Falls back to the post image, then the site default.",
+            }
       - { label: Body, name: body, widget: markdown, required: false }
 
   - name: home
@@ -183,6 +225,27 @@ collections:
                   name: caption,
                   widget: string,
                   required: false,
+                }
+          - label: SEO
+            name: seo
+            widget: object
+            collapsed: true
+            required: false
+            hint: "Optional. Overrides the site's default homepage title, description and share image."
+            fields:
+              - { label: SEO Title, name: title, widget: string, required: false }
+              - {
+                  label: SEO Description,
+                  name: description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  label: Share Image,
+                  name: image,
+                  widget: image,
+                  required: false,
+                  hint: "1200×630 recommended. Falls back to the site default.",
                 }
 
   - name: about
@@ -232,4 +295,25 @@ collections:
               widget: string,
               required: false,
             }
+          - label: SEO
+            name: seo
+            widget: object
+            collapsed: true
+            required: false
+            hint: "Optional. Overrides the automatic search/social title, description and share image for the About page."
+            fields:
+              - { label: SEO Title, name: title, widget: string, required: false }
+              - {
+                  label: SEO Description,
+                  name: description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  label: Share Image,
+                  name: image,
+                  widget: image,
+                  required: false,
+                  hint: "1200×630 recommended. Falls back to the profile photo, then the site default.",
+                }
           - { label: Bio, name: body, widget: markdown }

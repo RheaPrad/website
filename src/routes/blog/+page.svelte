@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -20,6 +21,8 @@
 		return images[path] || path;
 	}
 </script>
+
+<Seo title="Blog" description="Notes, sketches, and writing by Rhea Pradeep." />
 
 <div class="px-6 py-12 md:px-10 lg:px-[169px] lg:py-[72px]">
 	<div class="h-feed mx-auto max-w-[600px]">

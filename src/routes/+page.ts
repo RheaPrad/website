@@ -41,5 +41,14 @@ export const load: PageLoad = async () => {
 		bluesky: about.bluesky ?? ''
 	};
 
-	return { slides, socials };
+	// Optional homepage SEO overrides from the CMS; the share image is resolved
+	// through the home images map so it points at a real built asset.
+	const homeSeo = homeMeta.seo ?? {};
+	const seo = {
+		title: homeSeo.title ?? '',
+		description: homeSeo.description ?? '',
+		image: homeSeo.image ? resolve(homeSeo.image) : ''
+	};
+
+	return { slides, socials, seo };
 };

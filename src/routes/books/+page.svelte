@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -12,6 +13,8 @@
 		active === 'All' ? books : books.filter((b: { category: string }) => b.category === active)
 	);
 </script>
+
+<Seo title="Books" description="Books, comics, and printed work by Rhea Pradeep." />
 
 <section class="px-6 pt-8 pb-14 md:px-10 md:pt-10 lg:px-[100px] lg:pt-[56px] lg:pb-[80px]">
 	<!-- Filter buttons -->

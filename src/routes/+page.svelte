@@ -8,10 +8,11 @@
 	import behanceIcon from '$lib/assets/icons/Behance.png';
 	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
 	import EmailLink from '$lib/components/EmailLink.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
-	const { slides, socials } = $derived(data);
+	const { slides, socials, seo } = $derived(data);
 
 	let api = $state<CarouselAPI>();
 	let paused = $state(false);
@@ -54,6 +55,8 @@
 		paused = !paused;
 	}
 </script>
+
+<Seo type="profile" title={seo?.title} description={seo?.description} image={seo?.image} />
 
 <!-- Full-bleed looping carousel — click anywhere to pause/play -->
 <section class="relative h-[calc(100vh-109px)] w-full overflow-hidden bg-black select-none">
