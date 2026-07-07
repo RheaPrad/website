@@ -1,35 +1,46 @@
 <script lang="ts">
-	import { Linkedin, Instagram, Mail } from '@lucide/svelte';
 	import type { PageData } from './$types';
+	import linkedinIcon from '$lib/assets/icons/LinkedIn.png';
+	import instagramIcon from '$lib/assets/icons/Instagram.png';
+	import mailIcon from '$lib/assets/icons/Mail.png';
+	import behanceIcon from '$lib/assets/icons/Behance.png';
+	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
 
 	const { data } = $props<{ data: PageData }>();
 	const { metadata, component, images } = $derived(data);
 	const about = $derived(metadata ?? {});
 
-	const blueskyPath =
-		'M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07c-20.703 73.984-96.144 92.854-163.25 81.433c117.3 19.964 147.14 86.092 82.697 152.22c-122.39 125.59-175.91-31.511-189.63-71.766c-2.514-7.38-3.69-10.832-3.708-7.896c-0.017-2.936-1.193.516-3.707 7.896c-13.714 40.255-67.233 197.36-189.63 71.766c-64.444-66.128-34.605-132.26 82.697-152.22c-67.108 11.421-142.55-7.45-163.25-81.433C20.155 217.613 10 86.535 10 68.825c0-88.687 77.742-60.816 125.72-24.795z';
+	const socialLinks = $derived(
+		[
+			{ key: 'linkedin', href: about.linkedin, icon: linkedinIcon, label: 'LinkedIn' },
+			{ key: 'instagram', href: about.instagram, icon: instagramIcon, label: 'Instagram' },
+			{ key: 'email', href: about.email ? `mailto:${about.email}` : '', icon: mailIcon, label: 'Email' },
+			{ key: 'behance', href: about.behance, icon: behanceIcon, label: 'Behance' },
+			{ key: 'bluesky', href: about.bluesky, icon: blueskyIcon, label: 'Bluesky' }
+		].filter((s) => s.href)
+	);
 </script>
 
 <article
 	class="px-6 pt-10 pb-12
 	       md:px-10 md:pt-12
-	       lg:pl-[131px] lg:pr-[131px] lg:pt-[72px] lg:pb-[80px]"
+	       lg:pt-[72px] lg:pr-[131px] lg:pb-[80px] lg:pl-[131px]"
 >
 	<!-- Main layout: stacked on mobile, side-by-side on lg -->
-	<div class="flex flex-col gap-10 lg:flex-row lg:gap-[80px] lg:items-start">
+	<div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-[80px]">
 		<!-- Left: heading + bio -->
-		<div class="flex-1 min-w-0 order-2 lg:order-1">
+		<div class="order-2 min-w-0 flex-1 lg:order-1">
 			<h1
-				class="font-sans font-normal
-				       text-[32px] md:text-[40px] lg:text-[48px] mb-8 lg:mb-[40px]"
+				class="mb-8 font-sans
+				       text-[32px] font-normal md:text-[40px] lg:mb-[40px] lg:text-[48px]"
 			>
 				ABOUT
 			</h1>
 
 			{#if component}
 				<div
-					class="font-sans font-normal
-					       text-[15px] md:text-[18px] lg:text-[20px] leading-[1.7]"
+					class="font-sans text-[15px]
+					       leading-[1.7] font-normal md:text-[18px] lg:text-[20px]"
 				>
 					<svelte:component this={component} />
 				</div>
@@ -37,17 +48,17 @@
 		</div>
 
 		<!-- Right: photo -->
-		<div class="w-full order-1 lg:order-2 lg:w-[564px] lg:shrink-0">
+		<div class="order-1 w-full lg:order-2 lg:w-[564px] lg:shrink-0">
 			{#if about.photo}
 				<img
 					src={images[about.photo] || about.photo}
 					alt="Rhea Pradeep"
-					class="w-full h-[280px] md:h-[420px] lg:h-[680px] object-cover object-top"
+					class="h-[280px] w-full object-cover object-top md:h-[420px] lg:h-[680px]"
 				/>
 			{:else}
 				<div
-					class="w-full h-[280px] md:h-[420px] lg:h-[680px] bg-gray-100
-					       flex items-center justify-center"
+					class="flex h-[280px] w-full items-center justify-center
+					       bg-gray-100 md:h-[420px] lg:h-[680px]"
 				>
 					<span class="text-gray-400">Photo</span>
 				</div>
@@ -71,54 +82,17 @@
 	</div>
 
 	<!-- Social icons -->
-	<div class="flex justify-start gap-5 mt-8 lg:mt-10">
-		{#if about.linkedin}
+	<div class="mt-8 flex justify-start gap-4 lg:mt-10">
+		{#each socialLinks as s (s.key)}
 			<a
-				href={about.linkedin}
-				aria-label="LinkedIn"
-				target="_blank"
+				href={s.href}
+				aria-label={s.label}
+				target={s.href.startsWith('mailto:') ? undefined : '_blank'}
 				rel="noopener noreferrer"
-				class="w-[39px] h-[39px] rounded-full bg-[#363b51] flex items-center justify-center
-				       text-white hover:opacity-80 transition-opacity"
+				class="block h-[39px] w-[39px] transition-transform hover:scale-110"
 			>
-				<Linkedin size={18} />
+				<img src={s.icon} alt={s.label} class="h-full w-full object-contain" />
 			</a>
-		{/if}
-		{#if about.instagram}
-			<a
-				href={about.instagram}
-				aria-label="Instagram"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="w-[39px] h-[39px] rounded-full bg-[#363b51] flex items-center justify-center
-				       text-white hover:opacity-80 transition-opacity"
-			>
-				<Instagram size={18} />
-			</a>
-		{/if}
-		{#if about.email}
-			<a
-				href="mailto:{about.email}"
-				aria-label="Email"
-				class="w-[39px] h-[39px] rounded-full bg-[#363b51] flex items-center justify-center
-				       text-white hover:opacity-80 transition-opacity"
-			>
-				<Mail size={18} />
-			</a>
-		{/if}
-		{#if about.bluesky}
-			<a
-				href={about.bluesky}
-				aria-label="Bluesky"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="w-[39px] h-[39px] rounded-full bg-[#363b51] flex items-center justify-center
-				       text-white hover:opacity-80 transition-opacity"
-			>
-				<svg width="18" height="18" viewBox="0 0 600 530" fill="currentColor" aria-hidden="true">
-					<path d={blueskyPath} />
-				</svg>
-			</a>
-		{/if}
+		{/each}
 	</div>
 </article>

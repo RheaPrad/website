@@ -1,211 +1,128 @@
 <script lang="ts">
-	import portrait from '$lib/content/home-page/checkers.webp';
+	import * as Carousel from '$lib/components/ui/carousel';
+	import type { CarouselAPI } from '$lib/components/ui/carousel/context';
+	import { Pause, Play } from '@lucide/svelte';
+	import instagramIcon from '$lib/assets/icons/Instagram.png';
+	import linkedinIcon from '$lib/assets/icons/LinkedIn.png';
+	import mailIcon from '$lib/assets/icons/Mail.png';
+	import behanceIcon from '$lib/assets/icons/Behance.png';
+	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
 	import type { PageData } from './$types';
-	import { ArrowRight } from '@lucide/svelte';
+
 	const { data } = $props<{ data: PageData }>();
-	const { homeMeta, recentPosts, buildDate, books, comics, images } = $derived(data);
+	const { slides, socials } = $derived(data);
 
-	const featuredBook = $derived(resolve(homeMeta.featured_book ?? ''));
-	const featuredComic = $derived(resolve(homeMeta.featured_comic ?? ''));
+	let api = $state<CarouselAPI>();
+	let paused = $state(false);
+	let selected = $state(0);
 
-	const buildDateFormatted = $derived(
-		new Date(buildDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+	// Track the active slide so we can show its caption
+	$effect(() => {
+		if (!api) return;
+		const update = () => (selected = api!.selectedScrollSnap());
+		api.on('select', update);
+		update();
+		return () => api?.off('select', update);
+	});
+
+	// Autoplay — advance while not paused (a single slide never loops)
+	$effect(() => {
+		if (!api || paused || slides.length < 2) return;
+		const id = setInterval(() => api?.scrollNext(), 4500);
+		return () => clearInterval(id);
+	});
+
+	const caption = $derived(slides[selected]?.caption ?? '');
+
+	const socialLinks = $derived(
+		[
+			{ key: 'instagram', href: socials.instagram, icon: instagramIcon, label: 'Instagram' },
+			{ key: 'linkedin', href: socials.linkedin, icon: linkedinIcon, label: 'LinkedIn' },
+			{
+				key: 'email',
+				href: socials.email ? `mailto:${socials.email}` : '',
+				icon: mailIcon,
+				label: 'Email'
+			},
+			{ key: 'behance', href: socials.behance, icon: behanceIcon, label: 'Behance' },
+			{ key: 'bluesky', href: socials.bluesky, icon: blueskyIcon, label: 'Bluesky' }
+		].filter((s) => s.href)
 	);
 
-	function shortDate(dateStr: string) {
-		return new Date(dateStr).toLocaleDateString('en-GB', {
-			day: 'numeric',
-			month: 'short',
-			year: 'numeric'
-		});
-	}
-
-	function resolve(path: string) {
-		return images[path] || path;
+	function togglePause() {
+		paused = !paused;
 	}
 </script>
 
-<!-- Hero -->
-<section class="relative h-[340px] overflow-hidden md:h-[500px] lg:h-[440px]">
-	<img
-		src={portrait}
-		alt="Rhea Pradeep"
-		class="absolute inset-0 h-full w-full object-cover object-[25%_35%]"
-	/>
-	<div
-		class="absolute inset-0 flex items-end justify-end bg-black/30
-		       px-6 pb-8 md:px-10 md:pb-12 lg:pb-[80px] lg:pl-[169px]"
-	>
-		<div class="text-right text-white">
-			<h1
-				class="font-display text-[36px]
-				       leading-none font-medium tracking-[3px]
-				       uppercase md:text-[52px] lg:text-[72px] lg:tracking-[4px]"
-			>
-				Rhea Pradeep
-			</h1>
+<!-- Full-bleed looping carousel — click anywhere to pause/play -->
+<section class="relative h-[calc(100vh-109px)] w-full overflow-hidden bg-black select-none">
+	<Carousel.Root class="h-full" opts={{ loop: true }} setApi={(a) => (api = a)}>
+		<Carousel.Content class="ms-0 h-full">
+			{#each slides as slide (slide.src)}
+				<Carousel.Item class="h-full ps-0">
+					<img
+						src={slide.src}
+						alt={slide.caption || ''}
+						draggable="false"
+						class="h-[calc(100vh-109px)] w-full object-cover object-center"
+					/>
+				</Carousel.Item>
+			{/each}
+		</Carousel.Content>
+	</Carousel.Root>
+
+	<!-- Click surface for pause/play (sits above the carousel, below overlays) -->
+	<button
+		type="button"
+		class="absolute inset-0 z-10 cursor-pointer"
+		onclick={togglePause}
+		aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
+	></button>
+
+	<!-- Optional caption (CMS-driven, per slide) -->
+	{#if caption}
+		<div
+			class="pointer-events-none absolute right-6 bottom-20 left-6 z-20 md:bottom-6 md:max-w-[60%]"
+		>
 			<p
-				class="mt-3 font-sans
-				       text-[16px] font-normal tracking-[0.5px] md:text-[20px] lg:mt-4 lg:text-[24px]"
+				class="font-sans text-[15px] leading-snug font-normal text-white
+				       [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] md:text-[18px]"
 			>
-				Visual storyteller &amp; illustrator
+				{caption}
 			</p>
 		</div>
-	</div>
-</section>
-
-<!-- ── Status line ──────────────────────────────────────────────── -->
-
-{#snippet thumbItems()}
-	{#each books as book (book.slug)}
-		{#if book.cover}
-			<a
-				href="/art/books/{book.slug}"
-				class="flex shrink-0 flex-col items-center gap-1 transition-opacity hover:opacity-70"
-			>
-				<img src={resolve(book.cover)} alt={book.title} class="h-[52px] w-[39px] object-cover" />
-				<span
-					class="line-clamp-2 w-[52px] overflow-hidden text-center font-sans text-[10px] leading-tight text-gray-500"
-				>
-					{book.title}
-				</span>
-				{#if book.year}
-					<span class="font-sans text-[9px] leading-none text-gray-400">{book.year}</span>
-				{/if}
-			</a>
-		{/if}
-	{/each}
-
-	{#if comics.length > 0}
-		<span class="shrink-0 self-end pb-5 font-sans text-[13px] text-gray-200">/</span>
 	{/if}
 
-	{#each comics as comic (comic.slug)}
-		{#if comic.image}
-			<a
-				href="/art/comics"
-				class="flex shrink-0 flex-col items-center gap-1 transition-opacity hover:opacity-70"
-			>
-				<img src={resolve(comic.image)} alt={comic.title} class="h-[52px] w-[65px] object-cover" />
-				<span
-					class="line-clamp-2 w-[65px] overflow-hidden text-center font-sans text-[10px] leading-tight text-gray-500"
-				>
-					{comic.title}
-				</span>
-				{#if comic.year}
-					<span class="font-sans text-[9px] leading-none text-gray-400">{comic.year}</span>
-				{/if}
-			</a>
+	<!-- Pause indicator -->
+	<div
+		class="pointer-events-none absolute top-5 right-5 z-20 flex h-9 w-9 items-center justify-center
+		       rounded-full bg-black/25 text-white backdrop-blur-sm transition-opacity duration-300
+		       {paused ? 'opacity-100' : 'opacity-0'}"
+		aria-hidden="true"
+	>
+		{#if paused}
+			<Play size={16} />
+		{:else}
+			<Pause size={16} />
 		{/if}
-	{/each}
-{/snippet}
-
-<!-- Mobile: label pinned left | items scroll | date pinned right -->
-<div class="flex flex-col items-end gap-3 px-6 py-10 md:hidden">
-	<span
-		class="shrink-0 self-center pb-0.5 font-sans text-[11px] tracking-[1px] text-gray-400 uppercase"
-	>
-		added
-	</span>
-	<div class="min-w-0 flex-1 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-		<div class="flex items-end gap-3 pb-0.5">
-			{@render thumbItems()}
-		</div>
 	</div>
-	<span class="shrink-0 self-center pb-0.5 font-sans text-[11px] text-gray-400">
-		— {buildDateFormatted}
-	</span>
-</div>
 
-<!-- Desktop: centred wrapping row (unchanged from before) -->
-<div
-	class="hidden items-end justify-center gap-x-3 gap-y-4 py-10 md:flex md:flex-wrap md:px-10 lg:px-[169px]"
->
-	<span
-		class="shrink-0 self-end pb-0.5 font-sans text-[11px] tracking-[1px] text-gray-400 uppercase"
-	>
-		added
-	</span>
-	{@render thumbItems()}
-	<span class="ml-1 shrink-0 self-end pb-0.5 font-sans text-[11px] text-gray-400">
-		— {buildDateFormatted}
-	</span>
-</div>
-
-<!-- Featured Work -->
-<section class="px-6 py-10 md:px-10 md:py-14 lg:px-[169px] lg:py-[80px]">
-	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
-		<!-- Books -->
-		<a href="/art/books" class="group block">
-			<div class="mb-4 overflow-hidden">
-				<img
-					src={featuredBook}
-					alt="Books"
-					class="aspect-3/4 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-				/>
-			</div>
-			<div class="flex items-center justify-between">
-				<span
-					class="font-display text-[16px] font-medium tracking-[2.6px] uppercase md:text-[20px]"
-				>
-					Books
-				</span>
-				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					><ArrowRight /></span
-				>
-			</div>
-		</a>
-
-		<!-- Comics -->
-		<a href="/art/comics" class="group block">
-			<div class="mb-4 overflow-hidden">
-				<img
-					src={featuredComic}
-					alt="Comics"
-					class="aspect-3/4 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-				/>
-			</div>
-			<div class="flex items-center justify-between">
-				<span
-					class="font-display text-[16px] font-medium tracking-[2.6px] uppercase md:text-[20px]"
-				>
-					Comics
-				</span>
-				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					><ArrowRight /></span
-				>
-			</div>
-		</a>
-
-		<!-- Notebook -->
-		<a href="/blog" class="group block">
-			<div
-				class="mb-4 flex aspect-3/4 flex-col justify-end overflow-hidden bg-[#363b51] p-6 md:p-8"
+	<!-- Social icons (above the click surface, so links stay clickable) -->
+	<div class="absolute right-5 bottom-5 z-20 flex items-center gap-1.5">
+		{#each socialLinks as s (s.key)}
+			<a
+				href={s.href}
+				aria-label={s.label}
+				target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+				rel="noopener noreferrer"
+				class="block h-10 w-10 transition-transform hover:scale-110"
 			>
-				{#if recentPosts.length > 0}
-					<p class="mb-2 font-sans text-[11px] tracking-[1.5px] text-white/50 uppercase">Latest</p>
-					<p class="font-sans text-[18px] leading-snug text-white md:text-[20px]">
-						{recentPosts[0].metadata.title || 'Untitled'}
-					</p>
-					{#if recentPosts[0].metadata.date}
-						<p class="mt-2 font-sans text-[12px] text-white/50">
-							{shortDate(recentPosts[0].metadata.date)}
-						</p>
-					{/if}
-				{:else}
-					<p class="font-sans text-[16px] text-white/60">Notes &amp; observations</p>
-				{/if}
-			</div>
-			<div class="flex items-center justify-between">
-				<span
-					class="font-display text-[16px] font-medium tracking-[2.6px] uppercase md:text-[20px]"
-				>
-					Blog
-				</span>
-				<span class="text-[18px] transition-transform duration-200 group-hover:translate-x-1"
-					><ArrowRight /></span
-				>
-			</div>
-		</a>
+				<img
+					src={s.icon}
+					alt={s.label}
+					class="h-full w-full object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]"
+				/>
+			</a>
+		{/each}
 	</div>
 </section>

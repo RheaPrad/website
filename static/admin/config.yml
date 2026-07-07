@@ -71,8 +71,31 @@ collections:
         label: Home Page
         file: src/lib/content/home-page/home.md
         fields:
-          - { label: Featured Book Cover, name: featured_book, widget: image }
-          - { label: Featured Comic Cover, name: featured_comic, widget: image }
+          - {
+              label: Featured Book Cover,
+              name: featured_book,
+              widget: image,
+              required: false,
+            }
+          - {
+              label: Featured Comic Cover,
+              name: featured_comic,
+              widget: image,
+              required: false,
+            }
+          - label: Carousel
+            name: carousel
+            widget: list
+            label_singular: Slide
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: Image, name: image, widget: image }
+              - {
+                  label: Caption,
+                  name: caption,
+                  widget: string,
+                  required: false,
+                }
 
   - name: about
     label: About
@@ -98,6 +121,12 @@ collections:
           - {
               label: BlueSky URL,
               name: bluesky,
+              widget: string,
+              required: false,
+            }
+          - {
+              label: Behance URL,
+              name: behance,
               widget: string,
               required: false,
             }

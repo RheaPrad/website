@@ -2,10 +2,17 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import portrait from '$lib/content/home-page/portrait_r.webp';
-	import { Linkedin, Instagram, Mail } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
+	import { page } from '$app/state';
+	import linkedinIcon from '$lib/assets/icons/LinkedIn.png';
+	import instagramIcon from '$lib/assets/icons/Instagram.png';
+	import mailIcon from '$lib/assets/icons/Mail.png';
+	import blueskyIcon from '$lib/assets/icons/Bluesky.png';
 
 	let { children } = $props();
+
+	// Home is a full-bleed carousel with its own overlaid social icons
+	const isHome = $derived(page.url.pathname === '/');
 
 	let mobileOpen = $state(false);
 
@@ -16,8 +23,12 @@
 		{ href: '/about', label: 'contact' }
 	];
 
-	const blueskyPath =
-		'M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07c-20.703 73.984-96.144 92.854-163.25 81.433c117.3 19.964 147.14 86.092 82.697 152.22c-122.39 125.59-175.91-31.511-189.63-71.766c-2.514-7.38-3.69-10.832-3.708-7.896c-0.017-2.936-1.193.516-3.707 7.896c-13.714 40.255-67.233 197.36-189.63 71.766c-64.444-66.128-34.605-132.26 82.697-152.22c-67.108 11.421-142.55-7.45-163.25-81.433C20.155 217.613 10 86.535 10 68.825c0-88.687 77.742-60.816 125.72-24.795z';
+	const socialLinks = [
+		{ href: 'https://linkedin.com/in/rhea-pradeep', icon: linkedinIcon, label: 'LinkedIn' },
+		{ href: 'https://instagram.com', icon: instagramIcon, label: 'Instagram' },
+		{ href: 'mailto:hello@rheapradeep.com', icon: mailIcon, label: 'Email' },
+		{ href: 'https://bsky.app', icon: blueskyIcon, label: 'Bluesky' }
+	];
 </script>
 
 <svelte:head>
@@ -25,7 +36,7 @@
 </svelte:head>
 
 <!-- ─── Header ─────────────────────────────────────────────── -->
-<header class="flex h-[109px] items-center bg-[#363b51] px-6 lg:px-[26px]">
+<header class="flex h-[109px] items-center bg-primary px-6 lg:px-[26px]">
 	<!-- Logo -->
 	<a href="/" class="flex-shrink-0">
 		<img class="h-[58px] w-[58px] rounded-full object-cover" src={portrait} alt="Rhea Pradeep" />
@@ -70,7 +81,7 @@
 			<Popover.Content
 				class="mt-8 w-(--bits-popover-content-available-width) rounded-none
 				       border-none
-				       bg-[#363b51] p-0 shadow-none backdrop-blur-sm"
+				       bg-primary p-0 shadow-none backdrop-blur-sm"
 				align="end"
 				side="bottom"
 				sideOffset={0}
@@ -100,48 +111,22 @@
 </main>
 
 <!-- ─── Footer ────────────────────────────────────────────── -->
+{#if !isHome}
 <footer
-	class="flex h-[109px] items-center justify-center gap-6 bg-[#363b51]
+	class="flex h-[109px] items-center justify-center gap-6 bg-primary
 	       px-6 lg:justify-end lg:gap-[51px] lg:px-[26px]"
 >
-	<a
-		href="https://linkedin.com/in/rhea-pradeep"
-		aria-label="LinkedIn"
-		target="_blank"
-		rel="noopener noreferrer"
-		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
-		       text-white transition-colors hover:border-white"
-	>
-		<Linkedin size={18} />
-	</a>
-	<a
-		href="https://instagram.com"
-		aria-label="Instagram"
-		target="_blank"
-		rel="noopener noreferrer"
-		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
-		       text-white transition-colors hover:border-white"
-	>
-		<Instagram size={18} />
-	</a>
-	<a
-		href="mailto:hello@rheapradeep.com"
-		aria-label="Email"
-		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
-		       text-white transition-colors hover:border-white"
-	>
-		<Mail size={18} />
-	</a>
-	<a
-		href="https://bsky.app"
-		aria-label="Bluesky"
-		target="_blank"
-		rel="noopener noreferrer"
-		class="flex h-[39px] w-[39px] items-center justify-center rounded-full border border-white/40
-		       text-white transition-colors hover:border-white"
-	>
-		<svg width="18" height="18" viewBox="0 0 600 530" fill="currentColor" aria-hidden="true">
-			<path d={blueskyPath} />
-		</svg>
-	</a>
+	{#each socialLinks as s (s.label)}
+		<a
+			href={s.href}
+			aria-label={s.label}
+			target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+			rel="noopener noreferrer"
+			class="flex h-[39px] w-[39px] items-center justify-center rounded-full bg-white
+			       transition-transform hover:scale-110"
+		>
+			<img src={s.icon} alt={s.label} class="h-[30px] w-[30px] object-contain" />
+		</a>
+	{/each}
 </footer>
+{/if}

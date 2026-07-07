@@ -3,67 +3,43 @@ import type { PageLoad } from './$types';
 export const prerender = true;
 
 export const load: PageLoad = async () => {
-	// ── Home settings (featured covers) ────────────────────────────
+	// ── Home settings (carousel slides + captions) ─────────────────
 	const homeModules = import.meta.glob('/src/lib/content/home-page/home.md', { eager: true });
 	const homeMeta = (Object.values(homeModules)[0] as any)?.metadata ?? {};
 
-	// ── Recent blog posts ──────────────────────────────────────────
-	const postModules = import.meta.glob('/src/lib/content/blog-page/**/*.md', { eager: true });
-	const recentPosts = Object.entries(postModules)
-		.map(([path, m]: [string, any]) => ({
-			slug: path.split('/').pop()?.replace('.md', '') ?? '',
-			metadata: m.metadata ?? {}
-		}))
-		.filter((p) => p.slug && !p.slug.startsWith('.'))
-		.sort(
-			(a, b) =>
-				new Date(b.metadata.date ?? 0).getTime() - new Date(a.metadata.date ?? 0).getTime()
-		)
-		.slice(0, 3);
+	// ── Social links (managed on the About page) ───────────────────
+	const aboutModules = import.meta.glob('/src/lib/content/about-page/about.md', { eager: true });
+	const about = (Object.values(aboutModules)[0] as any)?.metadata ?? {};
 
-	// ── Status line ────────────────────────────────────────────────
-	const buildDate = new Date().toISOString();
-
-	const bookModules = import.meta.glob('/src/lib/content/art-page/books/**/*.md', { eager: true });
-	const books = Object.entries(bookModules)
-		.map(([path, m]: [string, any]) => ({
-			slug: path.split('/').pop()?.replace('.md', '') ?? '',
-			title: (m.metadata ?? {}).title ?? '',
-			cover: (m.metadata ?? {}).cover_image ?? '',
-			year: (m.metadata ?? {}).date
-				? String(new Date((m.metadata ?? {}).date).getFullYear())
-				: ''
-		}))
-		.filter((b) => b.slug && !b.slug.startsWith('.'))
-		.slice(0, 3);
-
-	const comicModules = import.meta.glob('/src/lib/content/art-page/comics/**/*.md', {
+	// ── Resolve image urls ─────────────────────────────────────────
+	const images = import.meta.glob('/src/lib/content/home-page/**/*.{jpg,jpeg,png,webp}', {
+		query: '?url',
+		import: 'default',
 		eager: true
-	});
-	const comics = Object.entries(comicModules)
-		.map(([path, m]: [string, any]) => ({
-			slug: path.split('/').pop()?.replace('.md', '') ?? '',
-			title: (m.metadata ?? {}).title ?? '',
-			image: (m.metadata ?? {}).image ?? '',
-			year: (m.metadata ?? {}).date
-				? String(new Date((m.metadata ?? {}).date).getFullYear())
-				: ''
-		}))
-		.filter((c) => c.slug && !c.slug.startsWith('.'))
-		.slice(0, 2);
+	}) as Record<string, string>;
+	const resolve = (p: string) => images[p] || p;
 
-	// ── Images (all art-page + home-page) ─────────────────────────
-	const images = import.meta.glob(
-		'/src/lib/content/{home-page,art-page/books,art-page/comics}/**/*.{jpg,jpeg,png,webp}',
-		{ query: '?url', import: 'default', eager: true }
-	) as Record<string, string>;
+	let slides: { src: string; caption: string }[] = Array.isArray(homeMeta.carousel)
+		? homeMeta.carousel
+				.filter((s: any) => s?.image)
+				.map((s: any) => ({ src: resolve(s.image), caption: s.caption ?? '' }))
+		: [];
 
-	return {
-		homeMeta,
-		recentPosts,
-		buildDate,
-		books,
-		comics,
-		images
+	// Fallback: use every landing image if the CMS carousel is empty
+	if (slides.length === 0) {
+		slides = Object.entries(images)
+			.filter(([p]) => /landing-\d+/.test(p))
+			.sort(([a], [b]) => a.localeCompare(b))
+			.map(([, src]) => ({ src, caption: '' }));
+	}
+
+	const socials = {
+		instagram: about.instagram ?? '',
+		linkedin: about.linkedin ?? '',
+		email: about.email ?? '',
+		behance: about.behance ?? '',
+		bluesky: about.bluesky ?? ''
 	};
+
+	return { slides, socials };
 };
