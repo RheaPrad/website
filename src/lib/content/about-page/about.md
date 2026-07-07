@@ -29,4 +29,4 @@ RISD Graduate Thesis Show | 2026
 
 ## Publications
 
-[Voices](https://rheaprad.netlify.app) | RISD MFA Illustration Anthology 2026
+[Voices](https://digitalcommons.risd.edu/illustration_mfaanthologies/3/) | RISD MFA Illustration Anthology 2026
