@@ -94,6 +94,24 @@ collections:
         }
       - { label: Description, name: body, widget: markdown }
 
+  - name: illustrations
+    label: Illustrations
+    folder: src/lib/content/art-page/illustrations
+    create: true
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - {
+          label: Category,
+          name: category,
+          widget: select,
+          default: Illustration,
+          options: ["Comics", "Illustration", "Character Design", "Miscellany"],
+        }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Image, name: image, widget: image }
+
   - name: comics
     label: Comics
     folder: src/lib/content/art-page/comics

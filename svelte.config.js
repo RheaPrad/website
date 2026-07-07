@@ -14,7 +14,7 @@ const config = {
 			// Don't fail the whole build on links that are still WIP: nav pages
 			// not built yet, or CMS-uploaded assets (e.g. resume) not present.
 			handleHttpError: ({ path, message }) => {
-				const wip = ['/illustrations', '/now'];
+				const wip = ['/now'];
 				if (wip.some((p) => path === p || path.startsWith(`${p}/`))) return;
 				if (path.endsWith('.pdf')) return;
 				throw new Error(message);
