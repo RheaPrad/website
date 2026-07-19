@@ -3,7 +3,7 @@ title: Canidae
 date: 2025-08-06T15:56
 category: Artist Books
 pages: 12 panels
-dimensions: '| 3 x 14in'
+dimensions: 3 x 14in
 cover_image: /src/lib/content/art-page/books/canidae/cover.webp
 title_color: ''
 nav_theme: Auto
@@ -13,8 +13,6 @@ gallery:
   - image: /src/lib/content/art-page/books/canidae/canidae_pages-to-jpg-0002.webp
     caption: ''
   - image: /src/lib/content/art-page/books/canidae/canidae_pages-to-jpg-0007.webp
-    caption: ''
-  - image: /src/lib/content/art-page/books/canidae/canidae_pages-to-jpg-0008.webp
     caption: ''
   - image: /src/lib/content/art-page/books/canidae/canidae_pages-to-jpg-0010.webp
     caption: ''
